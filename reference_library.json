@@ -1,0 +1,1322 @@
+[
+  {
+    "category": "cmd-commands",
+    "title": "ipconfig /all — تنظیمات کامل شبکه",
+    "subtitle": "نمایش IP، ماسک، دروازه، DNS، DHCP و MAC",
+    "command": "ipconfig /all",
+    "description": "مرجع اصلی برای بررسی آدرس IP، ماسک subnet، دروازهی پیشفرض، سرورهای DNS، وضعیت DHCP و آدرس فیزیکی کارت شبکه.",
+    "tags": "ipconfig ip network dhcp dns mac adapter"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ipconfig /release و /renew",
+    "subtitle": "آزادسازی و تمدید اجارهی DHCP",
+    "command": "ipconfig /release\nipconfig /renew",
+    "description": "وقتی آدرس IP اشتباه یا旧的 است، اجارهی DHCP را آزاد و مجدداً درخواست کنید.",
+    "tags": "dhcp ip renew release network"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ipconfig /flushdns",
+    "subtitle": "پاک کردن کش DNS",
+    "command": "ipconfig /flushdns",
+    "description": "کش نامهای DNS را پاک میکند تا آدرسهای تغییرکرده مجدداً رزولوو شوند.",
+    "tags": "dns cache flush resolve"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ipconfig /registerdns",
+    "subtitle": "ثبت مجدد نام در DNS",
+    "command": "ipconfig /registerdns",
+    "description": "در محیط دامین، رکورد DNS کاربر را دوباره ثبت میکند.",
+    "tags": "dns domain register active directory"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ipconfig /displaydns",
+    "subtitle": "نمایش محتویات کش DNS",
+    "command": "ipconfig /displaydns",
+    "description": "رکوردهای کششده را برای عیبیابی رزولوشن نمایش میدهد.",
+    "tags": "dns cache display"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ping تست اتصال",
+    "subtitle": "ارسال بستهی ICMP و اندازهگیری زمان رفتوبرگشت",
+    "command": "ping -t 8.8.8.8",
+    "description": "سوئیچ -t تا停止 دستی ادامه میدهد؛ برای تست پایداری لینک مناسب است.",
+    "tags": "ping icmp latency connectivity"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "ping با MTU و DF",
+    "subtitle": "کشف حداکثر اندازهی بسته بدون fragmentation",
+    "command": "ping -f -l 1472 8.8.8.8",
+    "description": "اگر خطای Packet needs to be fragmented دیدید، MTU مسیر کمتر از ۱۵۰۰ است (معمولاً VPN/tunnel).",
+    "tags": "mtu fragmentation df vpn ping"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "tracert — مسیر بستهها",
+    "subtitle": "نمایش روترهای میانی",
+    "command": "tracert -d 8.8.8.8",
+    "description": "سوئیچ -d از رزولوشن نام جلوگیری میکند و مسیر سریعتر نشان داده میشود.",
+    "tags": "tracert route hop latency"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "pathping — تحلیل دقیق مسیر",
+    "subtitle": "ترکیب tracert + آمار packet loss",
+    "command": "pathping -n 192.168.50.8",
+    "description": "پس از چند دقیقه درصد ازدسترفتن بسته در هر hop را نشان میدهد؛ برایتشخیص روتر معیوب عالی است.",
+    "tags": "pathping loss hop diagnostics"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "netstat — اتصالات و پورتهای باز",
+    "subtitle": "نمایش اتصالاتactive و PID متناظر",
+    "command": "netstat -ano",
+    "description": "ستون آخر PID است؛ با tasklist /FI \"PID eq 1234\" میشود فرداشناس شد.",
+    "tags": "netstat port pid connection listen"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "netstat فیلتر شده",
+    "subtitle": "جستجوی پورت خاص",
+    "command": "netstat -ano | findstr :3389",
+    "description": "برای پیدا کردن اشغالکنندهی پورت 3389، 443 یا 8080.",
+    "tags": "netstat port findstr rdp"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "arp -a — جدول ARP",
+    "subtitle": "نمایش نگاشت IP به MAC",
+    "command": "arp -a",
+    "description": "برای تشخیص تداخل IP یا کش اشتباه در شبکه محلی.",
+    "tags": "arp mac ip conflict cache"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "arp -d — پاک کردن کش ARP",
+    "subtitle": "حذف ورودیهای کش ARP",
+    "command": "arp -d *",
+    "description": "بعد از تغییر آدرس MAC یا تداخل IP، کش را پاک کنید.",
+    "tags": "arp cache flush conflict"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "nslookup — بررسی DNS",
+    "subtitle": "رزولوشن نام و انواع رکورد",
+    "command": "nslookup google.com\nnslookup -type=mx example.com",
+    "description": "برای تست اینکه مشکل از DNS هست یا اتصال؛ نوع رکورد را با -type تغییر دهید.",
+    "tags": "dns nslookup mx a record resolve"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "whoami — کاربر جاری",
+    "subtitle": "نمایش حساب کاربری و گروهها",
+    "command": "whoami /all",
+    "description": "برای بررسی هویت و عضویت در گروههای محلی/دامین.",
+    "tags": "whoami user group security"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "hostname — نام میزبان",
+    "subtitle": "نمایش نام کامپیوتر",
+    "command": "hostname",
+    "description": "معادل سریع systeminfo برای فقط نام دستگاه.",
+    "tags": "hostname computer name"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "tasklist — لیست پروセスها",
+    "subtitle": "نمایش فرآیندهای در حال اجرا",
+    "command": "tasklist /svc",
+    "description": "همراه با /svc سرویسهای مرتبط با هر پروCESS را هم نشان میدهد.",
+    "tags": "tasklist process service"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "taskkill — پایان پروسه",
+    "subtitle": "بستن اجباری بر اساس PID یا نام",
+    "command": "taskkill /F /PID 1234\ntaskkill /F /IM chrome.exe",
+    "description": "/F یعنی اجباری؛ قبل از آن PID را با netstat یا tasklist پیدا کنید.",
+    "tags": "taskkill process kill pid"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "systeminfo — اطلاعات سیستم",
+    "subtitle": "گزارش کامل سختافزار و وینDOWS",
+    "command": "systeminfo",
+    "description": "شامل نام سیستم، OS، RAM، کارتهای شبکه و تاریخ نصب آپدیتها.",
+    "tags": "systeminfo os hardware inventory"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "sfc /scannow — تعمیر فایلهای سیستم",
+    "subtitle": "اسکن و تعمیر فایلهای محافظتشدیه ویندوز",
+    "command": "sfc /scannow",
+    "description": "در صورت خرابی فایلهای سیستم اجرا شود؛ اگر结果为 couldn't repair، DISM /Online /Cleanup-Image /RestoreHealth را امتحان کنید.",
+    "tags": "sfc dism repair system files"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "chkdsk — بررسی دیسک",
+    "subtitle": "یافتن و تعمیر خطاهای فایل سیستم",
+    "command": "chkdsk C: /f /r",
+    "description": "/f تعمیر میکند، /r سکتورهای بد را بازیابی میکند؛ در ریستارت بعدی اجرا میشود.",
+    "tags": "chkdsk disk error filesystem repair"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "shutdown — خاموش/ریستارت",
+    "subtitle": "کنترل خاموشی محلی یاremote",
+    "command": "shutdown /r /t 0\nshutdown /s /m \\\\SRV01 /t 60 /c \"Maintenance\"",
+    "description": "برای ریستارت سرور از راه دور از /m استفاده شود.",
+    "tags": "shutdown restart remote maintenance"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net user — حسابهای کاربری",
+    "subtitle": "مدیریت کاربران محلی",
+    "command": "net user\nnet user kourosh * /add",
+    "description": "لیست کاربران، ایجاد کاربر و ست کردن رمز (با * رمز بهصورت پنهان خواسته میشود).",
+    "tags": "net user account local user"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net localgroup — گروهها",
+    "subtitle": "اضافه کردن کاربر به گروه",
+    "command": "net localgroup administrators kourosh /add",
+    "description": "برای دادن دسترسی ادمین محلی.",
+    "tags": "net group administrators permissions"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net share — پوشههای بهاشتراکگذاشته",
+    "subtitle": "مدیریت Shareها",
+    "command": "net share\nnet share ShareName /delete",
+    "description": "نمایش اشتراکها و حذف یک اشتراک به نام مشخص.",
+    "tags": "net share smb folder delete"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net use — اتصال به share",
+    "subtitle": "نقشهکردن درایو شبکهای",
+    "command": "net use Z: \\\\SERVER\\Share /user:DOMAIN\\user",
+    "description": "برای دسترسی به پوشهی مشترک با اعتبارنامه.",
+    "tags": "net use mapping smb drive"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net start / net stop",
+    "subtitle": "مدیریت سرویسها",
+    "command": "net start\nnet stop Spooler",
+    "description": "لیست سرویسهای در حال اجرا و_stop/start سرویس.",
+    "tags": "net service start stop spooler"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "sc — کنترل سرویس",
+    "subtitle": "پیکربندی سرویسها",
+    "command": "sc query\nsc config Spooler start= auto",
+    "description": "ابزار پیشرفتهتر از net برای نوع startup و وضعیت سرویس.",
+    "tags": "sc service config startup"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "gpupdate /force",
+    "subtitle": "اعمال سیاستهای گروه",
+    "command": "gpupdate /force",
+    "description": "پس از تغییر GPO در دامین، سیاستها را فوراً روی کلاینت اعمال میکند.",
+    "tags": "gpo gpupdate domain policy"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "gpresult — نتیجهی سیاستها",
+    "subtitle": "گزارش GPOهای اعمالشده",
+    "command": "gpresult /h C:\\gp.html",
+    "description": "گزارش HTML از سیاستهای اعمالشده روی کاربر و کامپیوتر.",
+    "tags": "gpresult gpo report policy"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "robocopy — کپی قدرتمند",
+    "subtitle": "همگامسازی پوشهها",
+    "command": "robocopy C:\\Source D:\\Backup /MIR /R:2 /W:5",
+    "description": "/MIR آینه میکند (حذف فایلهای اضافی در مقصد)؛ مراقب باشید.",
+    "tags": "robocopy backup mirror copy"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "xcopy",
+    "subtitle": "کپی پوشه قدیمی",
+    "command": "xcopy C:\\Data D:\\Data /E /I /H",
+    "description": "جایگزین قدیمی robocopy؛ /E شامل پوشههای خالی.",
+    "tags": "xcopy copy folder"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "dir /s /b",
+    "subtitle": "لیست فایلها بهصورت مسیر کامل",
+    "command": "dir C:\\Logs\\*.log /s /b",
+    "description": "/s زیرپوشهها، /b فقط مسیرها (بدون سربرگ).",
+    "tags": "dir list files recursive"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "findstr — جستجو در متن",
+    "subtitle": "جستجوی رشتهای در فایلها",
+    "command": "findstr /i /n \"error\" C:\\Logs\\*.log",
+    "description": "/i غیرحساس به حروف، /n شماره خط.",
+    "tags": "findstr grep search text log"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "tree /f",
+    "subtitle": "نمایش درختی پوشهها",
+    "command": "tree C:\\Project /f",
+    "description": "/f فایلها را هم داخل درخت نشان میدهد.",
+    "tags": "tree folder structure"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "attrib",
+    "subtitle": "نمایش/تغییر ویژگی فایل",
+    "command": "attrib -h -r -s C:\\autorun.inf",
+    "description": "برای نمایش فایلهای مخفی سیستمی.",
+    "tags": "attrib hidden readonly system"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "icacls — مجوزها",
+    "subtitle": "مدیریت ACL فایلها",
+    "command": "icacls C:\\Data /grant Users:(RX)",
+    "description": "جایگزین cacls برای تنظیم مجوز NTFS.",
+    "tags": "icacls permissions acl ntfs"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "takeown — مالکیت فایل",
+    "subtitle": "گرفتن مالکیت",
+    "command": "takeown /F C:\\Data /R",
+    "description": "وقتی دسترسی به فایل به دلیل مالکیتTrad Buying نیست.",
+    "tags": "takeown ownership permission"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "mklink — لینک نمادین",
+    "subtitle": "ایجاد junction و symlink",
+    "command": "mklink /D C:\\Link D:\\RealFolder",
+    "description": "/D لینک دایرکتوری؛ بدون آن لینک فایل است.",
+    "tags": "mklink symlink junction"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "subst — درایو مجازی",
+    "subtitle": "نقشهکردن پوشه به حرف درایو",
+    "command": "subst Z: C:\\Users\\kourosh\\Desktop",
+    "description": "برای دستگیری سریع به پوشهی طولانی.",
+    "tags": "subst drive shortcut"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "route — جدول مسیریابی",
+    "subtitle": "نمایش و اضافه کردن مسیر",
+    "command": "route print\nroute add 10.10.0.0 mask 255.255.0.0 192.168.1.1 -p",
+    "description": "-p مسیر را دائمی میکند.",
+    "tags": "route table gateway static"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "netsh winsock reset",
+    "subtitle": "ریست پشتهnetwork",
+    "command": "netsh winsock reset",
+    "description": "پس از اجرا حتماً ریستارت کنید؛ برای خطای No Internet Access.",
+    "tags": "winsock reset network internet"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "netsh advfirewall",
+    "subtitle": "قواعد فایروال ویندوز",
+    "command": "netsh advfirewall firewall add rule name=\"Allow8080\" dir=in action=allow protocol=TCP localport=8080",
+    "description": "باز کردن پورت در فایروال ویندوز از خط فرمان.",
+    "tags": "firewall port rule netsh"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "powercfg /energy",
+    "subtitle": "گزارش مصرف انرژی",
+    "command": "powercfg /energy",
+    "description": "گزارش HTML از مشکلات مصرف و بیداریهای غیرمنتظره.",
+    "tags": "powercfg energy battery report"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "powercfg /systemsleepdiagnostics",
+    "subtitle": "تشخیص خواب سیستم",
+    "command": "powercfg /systemsleepdiagnostics",
+    "description": "مشخص میکند کدام فرآیند مانع خواب یا سبب بیداری شده است.",
+    "tags": "powercfg sleep wake diagnostics"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "driverquery",
+    "subtitle": "لیست درایورها",
+    "command": "driverquery /v /fo csv",
+    "description": "برای بررسی نسخهی درایورها و تاریخ آنها.",
+    "tags": "driver version driverquery"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "query user — نشستها",
+    "subtitle": "کاربران واردشده به سرور",
+    "command": "query user",
+    "description": "برای دیدن نشستهای RDP active و شناسهی آنها.",
+    "tags": "query user rdp session logoff"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "reg query / reg add",
+    "subtitle": "دستکاری رجیستری",
+    "command": "reg query HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\nreg add HKCU\\Software\\MyApp /v Test /t REG_SZ /d Value",
+    "description": "مرجع سریع برای خواندن و نوشتن کلیدها.",
+    "tags": "registry reg query add windows"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "certutil -hashfile",
+    "subtitle": "محاسبه هش فایل",
+    "command": "certutil -hashfile C:\\setup.exe SHA256",
+    "description": "برای تأیید صحت فایل دانلودشده.",
+    "tags": "hash sha256 certutil integrity"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "curl -I",
+    "subtitle": "دریافت هدرهای HTTP",
+    "command": "curl -I https://example.com",
+    "description": "بدون دانلود بدنه، کد وضعیت و هدرها را نشان میدهد.",
+    "tags": "curl http header status web"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "cmdkey /list",
+    "subtitle": "اعتبارنامههای ذخیرهشده",
+    "command": "cmdkey /list",
+    "description": "نمایش یا حذف credentialهای ذخیرهشده ویندوز.",
+    "tags": "cmdkey credentials saved password"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "net accounts",
+    "subtitle": "سیاست رمز عبور",
+    "command": "net accounts",
+    "description": "حداقل طول رمز، قفل شدن حساب و مدت قفل را نشان میدهد.",
+    "tags": "password policy lockout accounts"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "diskpart",
+    "subtitle": "مدیریت دیسکها",
+    "command": "diskpart\nlist disk\nlist volume",
+    "description": "ابزار خط فرمانی برای پارتیشنبندی؛ با احتیاط استفاده شود.",
+    "tags": "diskpart disk partition volume"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "bcdedit — بوت",
+    "subtitle": "تنظیمات بوت ویندوز",
+    "command": "bcdedit /enum all",
+    "description": "برای بررسی ورودیهای بوت؛ تغییرات اشتباه سیستم را بوتناپذیر میکند.",
+    "tags": "bcdedit boot startup recovery"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "bootrec — تعمیر بوت",
+    "subtitle": "ابزار ریکاوری بوت",
+    "command": "bootrec /fixmbr\nbootrec /fixboot\nbootrec /rebuildbcd",
+    "description": "از محیط ریکاوری ویندوز اجرا میشود.",
+    "tags": "bootrec recovery fixboot mbr"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "setx — متغیر محیطی",
+    "subtitle": "تنظیم متغیر دائمی",
+    "command": "setx JAVA_HOME \"C:\\Program Files\\Java\\jdk\"",
+    "description": "برخلاف set، مقدار دائمی میشود.",
+    "tags": "setx environment variable path"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "fc — مقایسه فایل",
+    "subtitle": "مقایسه دو فایل",
+    "command": "fc file1.txt file2.txt",
+    "description": "تفاوتهای دو فایل متنی را نشان میدهد.",
+    "tags": "fc compare diff text"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "cleanmgr — پاکسازی دیسک",
+    "subtitle": "آزادکردن فضای دیسک",
+    "command": "cleanmgr /sageset:1\ncleanmgr /sagerun:1",
+    "description": "پاککردن فایلهای موقت و Recycle Bin.",
+    "tags": "cleanmgr disk cleanup temp"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "taskschd.msc — زمانبندی وظایف",
+    "subtitle": "Task Scheduler",
+    "command": "taskschd.msc",
+    "description": "اجرای اسکریپت در زمانبندی؛ معادل GUI schtasks.",
+    "tags": "task scheduler schtasks cron"
+  },
+  {
+    "category": "cmd-commands",
+    "title": "schtasks",
+    "subtitle": "زمانبندی از خط فرمان",
+    "command": "schtasks /create /tn Backup /tr \"C:\\backup.bat\" /sc daily /st 02:00",
+    "description": "ایجاد تسکdaily بدون باز کردن GUI.",
+    "tags": "schtasks task schedule daily"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "ncpa.cpl — اتصالات شبکه",
+    "subtitle": "کارتهای شبکه و اتصالات",
+    "command": "ncpa.cpl",
+    "description": "مدیریت کارتnetwork، ویPIN، bridge و تغییر IP. قابلاجرا فقط در ویندوز.",
+    "tags": "cpl network adapter nic ip"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "appwiz.cpl — uninstallprogramها",
+    "subtitle": "برنامهها و ویژگیها",
+    "command": "appwiz.cpl",
+    "description": "فهرست نرمافزارهای نصبشده و حaktiv کردن ویژگیهای ویندوز.",
+    "tags": "cpl uninstall programs features"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "devmgmt.msc — Device Manager",
+    "subtitle": "مدیریت دستگاهها و درایورها",
+    "command": "devmgmt.msc",
+    "description": "بررسی خطاهای=device، بهروزرسانی یا uninstall درایور.",
+    "tags": "mmc device driver error"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "services.msc — سرویسها",
+    "subtitle": "مدیریت سرویسهای ویندوز",
+    "command": "services.msc",
+    "description": "start/stop و نوع Startup سرویسها مانند Print Spooler و DHCP Client.",
+    "tags": "mmc service startup"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "compmgmt.msc — مدیریت کامپیوتر",
+    "subtitle": "ترکیب ابزارهای مدیریتی",
+    "command": "compmgmt.msc",
+    "description": "شامل Event Viewer، Device Manager، Disk Management، Services و Shared Folders.",
+    "tags": "mmc computer management"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "diskmgmt.msc — مدیریت دیسک",
+    "subtitle": "پارتیشنها و حجمها",
+    "command": "diskmgmt.msc",
+    "description": "تغییر حرف درایو، فرمت، گسترش پارتیشن و inicialize دیسک.",
+    "tags": "mmc disk partition volume"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "eventvwr.msc — مشاهده وقایع",
+    "subtitle": "لاگهای سیستم وprogram",
+    "command": "eventvwr.msc",
+    "description": "مرجع اصلی عیبیابی: Application، System، Security و Setup logs.",
+    "tags": "event log error warning diagnostic"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "gpedit.msc — سیاست گروه محلی",
+    "subtitle": "ویرایش GPO محلی",
+    "command": "gpedit.msc",
+    "description": "تنظیم سیاستهای امنیتی و سیستمی (در نسخه Home موجود نیست).",
+    "tags": "gpo group policy local"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "secpol.msc — امنیت محلی",
+    "subtitle": "سیاستهای امنیتی",
+    "command": "secpol.msc",
+    "description": "قواعد حسابها، رمزها، ممیزی و IPsec.",
+    "tags": "security policy audit password"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "lusrmgr.msc — کاربران محلی",
+    "subtitle": "مدیریت کاربران و گروهها",
+    "command": "lusrmgr.msc",
+    "description": "ایجاد کاربر و عضویت در گروههای محلی.",
+    "tags": "local users groups administrator"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "dcomcnfg — سرویسهایComponent",
+    "subtitle": "تنظیمات DCOM",
+    "command": "dcomcnfg",
+    "description": "مجوزها و پیکربندی DCOM برای نرمافزارهای قدیمی.",
+    "tags": "dcom component permissions"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "sysdm.cpl — خصوصیات سیستم",
+    "subtitle": "نام کامپیوتر، دامین و سختافزار",
+    "command": "sysdm.cpl",
+    "description": "تبهای Computer Name، Hardware، Advanced، System Protection.",
+    "tags": "cpl system properties domain"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "firewall.cpl — فایروال ویندوز",
+    "subtitle": "تنظیمات فایروال ساده",
+    "command": "firewall.cpl",
+    "description": "فعال/غیرفعال و اجازه دادن به برنامهها.",
+    "tags": "firewall cpl allow app"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "wf.msc — فایروال پیشرفته",
+    "subtitle": "قواعد ورودی و خروجی",
+    "command": "wf.msc",
+    "description": "ایجاد قاعده برای پورت، پروتکل و ناحیهnetwork.",
+    "tags": "firewall advanced rule inbound outbound"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control /name Microsoft.NetworkAndSharingCenter",
+    "subtitle": "مرکز شبکه و اشتراکگذاری",
+    "command": "control /name Microsoft.NetworkAndSharingCenter",
+    "description": "نمایش نقشهnetwork، وضعیت اتصال و تنظیمات اشتراکگذاری.",
+    "tags": "network center sharing cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control /name Microsoft.WindowsFirewall",
+    "subtitle": "فایروال ویندوز (مسیر کنترلپنل)",
+    "command": "control /name Microsoft.WindowsFirewall",
+    "description": "معادل GUI باز کردن فایروال از Control Panel.",
+    "tags": "firewall controlpanel cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control /name Microsoft.UserAccounts",
+    "subtitle": "حسابهای کاربری",
+    "command": "control /name Microsoft.UserAccounts",
+    "description": "مدیریت حسابها و کنترل حساب کاربری (UAC).",
+    "tags": "user accounts uac cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "intl.cpl — تنظیمات منطقه",
+    "subtitle": "زبان، تاریخ و واحدها",
+    "command": "intl.cpl",
+    "description": "تغییر قالب تاریخ/زمان و فرمت اعداد.",
+    "tags": "region language locale cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "timedate.cpl — تاریخ و زمان",
+    "subtitle": "تنظیم ساعت و همگامسازی",
+    "command": "timedate.cpl",
+    "description": "تنظیم منطقهی زمانی و سرویس Windows Time.",
+    "tags": "time date timezone ntp cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "powercfg.cpl — گزینههای برق",
+    "subtitle": "plan برق و خواب",
+    "command": "powercfg.cpl",
+    "description": "انتخاب High performance یا Power saver و زمان خاموشی صفحه.",
+    "tags": "power plan sleep cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "inetcpl.cpl — گزینههای اینترنت",
+    "subtitle": "تنظیمات Internet Explorer/Proxy",
+    "command": "inetcpl.cpl",
+    "description": "پروکسی، امنیت و سابقه؛ جایگزین تنظیماتproxy در مرورگرها.",
+    "tags": "proxy internet options cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "main.cpl — ماوس",
+    "subtitle": "تنظیمات ماوس",
+    "command": "main.cpl",
+    "description": "سرعت نشانگر، دکمهها و wheel.",
+    "tags": "mouse cpl pointer"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "mmsys.cpl — صداها",
+    "subtitle": "دستگاههای صوتی",
+    "command": "mmsys.cpl",
+    "description": "انتخاب ورودی/خروجی صدا و صداهای سیستم.",
+    "tags": "sound audio device cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "sndvol.exe — میکسر صدا",
+    "subtitle": "کنترل حجم برنامهها",
+    "command": "sndvol.exe",
+    "description": "تنظیم جداگانهی صدای هرprogram.",
+    "tags": "volume mixer audio"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control folders — گزینههای فایل اکسپلورر",
+    "subtitle": "نمایش فایلهای مخفی و پسوندها",
+    "command": "control folders",
+    "description": "فعال کردن نمایش فایلهای مخفی و postfix نام فایل.",
+    "tags": "explorer hidden extension folder options"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control admintools — ابزارهای مدیریتی",
+    "subtitle": "پوشه Administrative Tools",
+    "command": "control admintools",
+    "description": "دسترسی سریع به mmcها و ابزارهای سروری.",
+    "tags": "admin tools control panel"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control schedtasks — Task Scheduler",
+    "subtitle": "زمانبندی وظایف",
+    "command": "control schedtasks",
+    "description": "معادل taskschd.msc از طریق Control Panel.",
+    "tags": "task scheduler cpl schedule"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control userpasswords2",
+    "subtitle": "حسابها با کنترل پیشرفته",
+    "command": "control userpasswords2",
+    "description": "اینترفیس قدیمیتر برای کاربران و لاگین خودکار.",
+    "tags": "user accounts autologon cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "netplwiz — کاربران شبکه",
+    "subtitle": "مدیریت کاربران و لاگین",
+    "command": "netplwiz",
+    "description": "غیرفعال کردن نیاز به رمز در ورود به ویندوز.",
+    "tags": "netplwiz autologin user"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "certmgr.msc — گواهینامهها",
+    "subtitle": "مدیریت certificateها",
+    "command": "certmgr.msc",
+    "description": "ریشههای مورد اعتماد، گواهینامههای شخصی و CRL.",
+    "tags": "certificate trust ssl cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "perfmon.msc — مانیتور عملکرد",
+    "subtitle": "شاخصهایperformance",
+    "command": "perfmon.msc",
+    "description": "نمایش زنده CPU، RAM، دیسک و شبکه.",
+    "tags": "performance monitor counter"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "resmon — مانیتور منابع",
+    "subtitle": "نمایش منابع به تفکیکprogram",
+    "command": "resmon",
+    "description": "برای تشخیصprogramی که دیسک یاnetwork را اشغال کرده.",
+    "tags": "resource monitor performance"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "taskmgr — Task Manager",
+    "subtitle": "پروسهها و عملکرد",
+    "command": "taskmgr",
+    "description": "پایان پروسه، Startup apps و جزئیات عملکرد.",
+    "tags": "task manager process cpu memory"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "regedit — ویرایشگر رجیستری",
+    "subtitle": "ویرایش رجیستری",
+    "command": "regedit",
+    "description": "فقط در صورت اطمینان؛ قبل از تغییر Export بگیرید.",
+    "tags": "registry editor regedit backup"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "msinfo32 — اطلاعات سیستم",
+    "subtitle": "گزارش کامل سختافزار/نرمافزار",
+    "command": "msinfo32",
+    "description": "خروجی قابل ذخیرهی NFO/HTML از تنظیمات سیستم.",
+    "tags": "system information inventory msinfo"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "dxdiag — ابزار DirectX",
+    "subtitle": "اطلاعات گرافیک و صدا",
+    "command": "dxdiag",
+    "description": "برای عیبیابی مشکلات نمایش و game.",
+    "tags": "directx graphics display diagnostic"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "cleanmgr — پاکسازی دیسک",
+    "subtitle": "حذف فایلهای موقت",
+    "command": "cleanmgr",
+    "description": "ابزار GUI پاکسازی دیسک.",
+    "tags": "disk cleanup temp cpl"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "dfrgui — بهینهسازی درایو",
+    "subtitle": "Defragment و TRIM",
+    "command": "dfrgui",
+    "description": "برای HDD defrag و برای SSD بهینهسازی.",
+    "tags": "defrag optimize ssd disk"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "printmanagement.msc — چاپگرها",
+    "subtitle": "مدیریت چاپگرها و صفها",
+    "command": "printmanagement.msc",
+    "description": "نصب درایور، صف چاپ و پرینتسرور.",
+    "tags": "printer print server queue"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "odbcad32 — منابع داده ODBC",
+    "subtitle": "تنظیم DSN",
+    "command": "odbcad32",
+    "description": "برای اتصالprogramها به دیتابیس از طریق ODBC.",
+    "tags": "odbc dsn database connection"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control /name Microsoft.ProgramsAndFeatures",
+    "subtitle": "برنامهها و ویژگیها",
+    "command": "control /name Microsoft.ProgramsAndFeatures",
+    "description": "همان appwiz.cpl از طریق Control Panel.",
+    "tags": "cpl uninstall program"
+  },
+  {
+    "category": "cpl-commands",
+    "title": "control /name Microsoft.RegionalAndLanguageOptions",
+    "subtitle": "زبان و منطقه",
+    "command": "control /name Microsoft.RegionalAndLanguageOptions",
+    "description": "معادل intl.cpl.",
+    "tags": "cpl region language"
+  },
+  {
+    "category": "keywords",
+    "title": "IP Address",
+    "subtitle": "آدرس منطقی هر دستگاه درnetwork",
+    "command": "IPv4 / IPv6 — 192.168.1.10",
+    "description": "آدرس ۳۲بیتی (IPv4) یا ۱۲۸بیتی (IPv6) که مسیریابی را ممکن میسازد.",
+    "tags": "ip address网络 آدرس آیپی"
+  },
+  {
+    "category": "keywords",
+    "title": "Subnet Mask",
+    "subtitle": "مشخصکنندهی قسمتnetwork و host",
+    "command": "255.255.255.0 = /24",
+    "description": "با AND کردن IP و ماسک، آدرسnetwork بهدست میآید.",
+    "tags": "subnet mask cidr network"
+  },
+  {
+    "category": "keywords",
+    "title": "CIDR",
+    "subtitle": "روش کوتاهنویسی ماسک",
+    "command": "/24 /25 /30",
+    "description": "عدد بعد از slash تعداد بیتهایnetwork است.",
+    "tags": "cidr prefix subnet"
+  },
+  {
+    "category": "keywords",
+    "title": "Default Gateway",
+    "subtitle": "دروازهی پیشفرض به خارج ازnetwork",
+    "command": "192.168.1.1",
+    "description": "وقتی مقصد outside subnet باشد، بسته به این روتر فرستاده میشود.",
+    "tags": "gateway router default"
+  },
+  {
+    "category": "keywords",
+    "title": "DNS",
+    "subtitle": "سامانهی نامدامنه",
+    "command": "example.com → 93.184.216.34",
+    "description": "نامها را به IP ترجمه میکند؛ بدونมัน مرورگرها کار نمیکنند.",
+    "tags": "dns domain name resolve"
+  },
+  {
+    "category": "keywords",
+    "title": "DHCP",
+    "subtitle": "تخصیص خودکار IP",
+    "command": "lease / renew / release",
+    "description": "آدرس، ماسک، gateway و DNS را بهصورت خودکار میدهد.",
+    "tags": "dhcp lease ip automatic"
+  },
+  {
+    "category": "keywords",
+    "title": "NAT",
+    "subtitle": "ترجمه آدرس شبکه",
+    "command": "private → public IP",
+    "description": "چند دستگاه خصوصی را پشت یک IP عمومی قرار میدهد.",
+    "tags": "nat translation router private public"
+  },
+  {
+    "category": "keywords",
+    "title": "VLAN",
+    "subtitle": "شبکه محلی مجازی",
+    "command": "VLAN 10 = Sales, VLAN 20 = IT",
+    "description": "تقسیک logical سوئیچ بدون کابلکشی جداگانه.",
+    "tags": "vlan switch trunk dot1q"
+  },
+  {
+    "category": "keywords",
+    "title": "Trunk",
+    "subtitle": "پورت حامل چند VLAN",
+    "command": "switchport mode trunk",
+    "description": "برای اتصال سوئیچها و حمل تگ 802.1Q.",
+    "tags": "trunk dot1q switch"
+  },
+  {
+    "category": "keywords",
+    "title": "STP",
+    "subtitle": "پروتکل درخت پوشا",
+    "command": "802.1D / RSTP 802.1w",
+    "description": "جلوگیری از حلقهی لایه ۲ با مسدودکردن پورت اضافی.",
+    "tags": "stp loop spanning tree"
+  },
+  {
+    "category": "keywords",
+    "title": "OSPF",
+    "subtitle": "پروتکل مسیریابی داخلی",
+    "command": "Area 0 / LSA / neighbor",
+    "description": "IGP مبتنی بر لینکstate برای شبکههای داخلی بزرگ.",
+    "tags": "ospf igp routing area"
+  },
+  {
+    "category": "keywords",
+    "title": "BGP",
+    "subtitle": "پروتکل مسیریابیbetween خودمختار",
+    "command": "AS 15169 / peer",
+    "description": "پروتکل اصلی اینترنت و ارتباط میان ISPها.",
+    "tags": "bgp as autonomous internet routing"
+  },
+  {
+    "category": "keywords",
+    "title": "MTU",
+    "subtitle": "حداکثر واحد انتقال",
+    "command": "1500 bytes (Ethernet)",
+    "description": "بزرگتر از MTU موجب fragmentation یا drop میشود.",
+    "tags": "mtu mss fragmentation jumbo"
+  },
+  {
+    "category": "keywords",
+    "title": "MSS",
+    "subtitle": "حداکثر سایز segment TCP",
+    "command": "MTU - 40 = 1460",
+    "description": "در TCP handshake مذاکره میشود.",
+    "tags": "mss tcp mtu handshake"
+  },
+  {
+    "category": "keywords",
+    "title": "ARP",
+    "subtitle": "پروتکل تفکیک آدرس",
+    "command": "IP → MAC",
+    "description": "آدرس IP را به آدرس فیزیکی کارتnetwork تبدیل میکند.",
+    "tags": "arp mac cache resolution"
+  },
+  {
+    "category": "keywords",
+    "title": "MAC Address",
+    "subtitle": "آدرس فیزیکی کارتnetwork",
+    "command": "00:1A:2B:3C:4D:5E",
+    "description": "در لایه ۲ برای تحویل frame داخل LAN استفاده میشود.",
+    "tags": "mac address nic layer2"
+  },
+  {
+    "category": "keywords",
+    "title": "Latency",
+    "subtitle": "تأخیر",
+    "command": "ping = 12 ms",
+    "description": "زمان رفتوبازگشت بسته؛ بالا بودن آن تجربهیbad VoIP را ایجاد میکند.",
+    "tags": "latency ping delay jitter"
+  },
+  {
+    "category": "keywords",
+    "title": "Jitter",
+    "subtitle": "تغییرات تأخیر",
+    "command": "VoIP jitter < 30 ms",
+    "description": "نوسان latency؛ برای صدا و ویدیو مهمتر از latency مطلق است.",
+    "tags": "jitter voip quality"
+  },
+  {
+    "category": "keywords",
+    "title": "Packet Loss",
+    "subtitle": "ازدسترفتن بسته",
+    "command": "2% loss",
+    "description": "علت معمول: congestion، کابل معیوب یا روتر overloaded.",
+    "tags": "packet loss pathping quality"
+  },
+  {
+    "category": "keywords",
+    "title": "Bandwidth",
+    "subtitle": "پهنای باند",
+    "command": "1 Gbps",
+    "description": "حداکثر نرخ transfer؛ با throughput متفاوت است.",
+    "tags": "bandwidth throughput speed"
+  },
+  {
+    "category": "keywords",
+    "title": "Duplex",
+    "subtitle": "حالت ارسال همزمان",
+    "command": "full / half duplex",
+    "description": "عدم تطابق duplex/switches یکی از علتهای عملکردbad شبکه است.",
+    "tags": "duplex collision switch"
+  },
+  {
+    "category": "keywords",
+    "title": "CRC",
+    "subtitle": "بررسی خطای frame",
+    "command": "CRC error counter",
+    "description": "خطای CRC معمولاً به کابل یا پورت معیوب اشاره دارد.",
+    "tags": "crc error layer2 cable"
+  },
+  {
+    "category": "keywords",
+    "title": "PoE",
+    "subtitle": "تغذیه از طریق کابلnetwork",
+    "command": "802.3af / at / bt",
+    "description": "تلفن IP و دوربین را با همان کابل RJ45 تغذیه میکند.",
+    "tags": "poe power over ethernet camera"
+  },
+  {
+    "category": "keywords",
+    "title": "ACL",
+    "subtitle": "لیست کنترل دسترسی",
+    "command": "permit ip 10.0.0.0/8 any",
+    "description": "قواعد اجازه/منع روی روتر یا فایروال.",
+    "tags": "acl access list firewall rule"
+  },
+  {
+    "category": "keywords",
+    "title": "VPN",
+    "subtitle": "شبکه خصوصی مجازی",
+    "command": "IPsec / SSL / WireGuard",
+    "description": "ارتباطرمزگذاریشده رویnetwork عمومی.",
+    "tags": "vpn tunnel ipsec ssl remote"
+  },
+  {
+    "category": "keywords",
+    "title": "TCP",
+    "subtitle": "پروتکل انتقال مطمئن",
+    "command": "SYN → SYN-ACK → ACK",
+    "description": "اتصالگرا، با تضمین تحویل و کنترل جریان.",
+    "tags": "tcp handshake port protocol"
+  },
+  {
+    "category": "keywords",
+    "title": "UDP",
+    "subtitle": "پروتکل سریع بدون اتصال",
+    "command": "DNS / VoIP / DHCP",
+    "description": "بدون تضمین تحویل؛ برای ترافیک realtime مناسب است.",
+    "tags": "udp protocol dns voip"
+  },
+  {
+    "category": "keywords",
+    "title": "Port",
+    "subtitle": "درگاه منطقیprogram",
+    "command": "80 HTTP, 443 HTTPS, 3389 RDP",
+    "description": "یک IP میتواند thousands از اتصالات را با پورتهای مختلف manage کند.",
+    "tags": "port tcp udp service"
+  },
+  {
+    "category": "keywords",
+    "title": "Socket",
+    "subtitle": "ترکیب IP + Port",
+    "command": "192.168.1.10:443",
+    "description": "یک انتهای اتصالnetwork را مشخص میکند.",
+    "tags": "socket ip port connection"
+  },
+  {
+    "category": "keywords",
+    "title": "TTL",
+    "subtitle": "طول عمر بسته",
+    "command": "ttl=64 / ttl=128",
+    "description": "در هر hop یک واحد کم میشود؛ صفر شدن یعنی بسته دور میزند.",
+    "tags": "ttl hop traceroute"
+  },
+  {
+    "category": "keywords",
+    "title": "QoS",
+    "subtitle": "کیفیت خدمات",
+    "command": "DSCP EF / AF41",
+    "description": "اولویتبندی ترافیک (مثلاً صدا قبل از دانلود).",
+    "tags": "qos dscp priority traffic"
+  },
+  {
+    "category": "keywords",
+    "title": "SNMP",
+    "subtitle": "پروتکل مدیریت سادهnetwork",
+    "command": "OID / community / trap",
+    "description": "برای مانیتورینگ روترها، سوئیچها و سرورها.",
+    "tags": "snmp oid monitoring trap"
+  },
+  {
+    "category": "keywords",
+    "title": "Syslog",
+    "subtitle": "لاگ متمرکز",
+    "command": "severity 0..7",
+    "description": "دستگاهها لاگهای خود را به سرور مرکزی میفرستند.",
+    "tags": "syslog log severity monitoring"
+  },
+  {
+    "category": "keywords",
+    "title": "NTP",
+    "subtitle": "همگامسازی زمان",
+    "command": "pool.ntp.org",
+    "description": "زمان نادرست باعث شکست احرازهویت و لاگهای ناهماهنگ میشود.",
+    "tags": "ntp time sync kerberos"
+  },
+  {
+    "category": "keywords",
+    "title": "LDAP",
+    "subtitle": "پروتکل دایرکتوری",
+    "command": "dc=example,dc=com",
+    "description": "برای جستجو در Active Directory و کاربرانorganization.",
+    "tags": "ldap active directory directory"
+  },
+  {
+    "category": "keywords",
+    "title": "RADIUS",
+    "subtitle": "احرازهویت متمرکز",
+    "command": "AAA / 1812",
+    "description": "برای WiFi enterprise و VPN.",
+    "tags": "radius aaa authentication wifi"
+  },
+  {
+    "category": "keywords",
+    "title": "Kerberos",
+    "subtitle": "احرازهویت دامین",
+    "command": "TGT / ticket / KDC",
+    "description": " سیستم تکتکمحور ویندوز دامین؛ وابسته به زمان دقیق (NTP).",
+    "tags": "kerberos ticket domain authentication"
+  },
+  {
+    "category": "keywords",
+    "title": "SLA",
+    "subtitle": "توافق سطح خدمات",
+    "command": "P1 = 15m response",
+    "description": "مهلت تعهدشده برای پاسخ و حل مشکل.",
+    "tags": "sla response resolution priority"
+  },
+  {
+    "category": "keywords",
+    "title": "MTTR",
+    "subtitle": "میانگین زمان تعمیر",
+    "command": "resolved_at - created_at",
+    "description": "یکی از مهمترین KPIهای هلپدسک.",
+    "tags": "mttr kpi helpdesk report"
+  },
+  {
+    "category": "keywords",
+    "title": "NOC",
+    "subtitle": "مرکز عملیاتnetwork",
+    "command": "24/7 monitoring",
+    "description": "تیمی که وضعیتnetwork را بهصورت مداوم پایش میکند.",
+    "tags": "noc operations monitoring team"
+  },
+  {
+    "category": "keywords",
+    "title": "SIEM",
+    "subtitle": "مدیریت وقایع امنیتی",
+    "command": "Splunk / Wazuh / QRadar",
+    "description": "جمعآوری و تحلیل لاگها برای تشخیص حوادث امنیتی.",
+    "tags": "siem log security incident"
+  },
+  {
+    "category": "keywords",
+    "title": "IDS / IPS",
+    "subtitle": "تشخیص/پیشگیری نفوذ",
+    "command": "signature / anomaly",
+    "description": "IDS هشدار میدهد، IPS ترافیک مخرب را مسدود میکند.",
+    "tags": "ids ips intrusion detection"
+  },
+  {
+    "category": "keywords",
+    "title": "WAF",
+    "subtitle": "فایروالprogram وب",
+    "command": "OWASP Top 10",
+    "description": "حملاتی مانند SQLi و XSS را در لایه HTTP مسدود میکند.",
+    "tags": "waf web owasp http"
+  },
+  {
+    "category": "keywords",
+    "title": "DMZ",
+    "subtitle": "منطقه میانیnetwork",
+    "command": "public servers",
+    "description": "قرار دادن سرورهای عمومی جدا ازnetwork داخلی.",
+    "tags": "dmz firewall network security"
+  },
+  {
+    "category": "keywords",
+    "title": "Hashing",
+    "subtitle": "انگشتنگاشت ثباتطول",
+    "command": "SHA-256 / bcrypt",
+    "description": "یکطرفه است؛ برای رمزها و بررسی صحت فایل.",
+    "tags": "hash sha256 password integrity"
+  },
+  {
+    "category": "keywords",
+    "title": "Encryption",
+    "subtitle": "رمزگذاری برگشتپذیر",
+    "command": "AES / RSA",
+    "description": "با کلید درست قابل رمزگشایی است.",
+    "tags": "encryption aes rsa confidential"
+  },
+  {
+    "category": "keywords",
+    "title": "Encoding",
+    "subtitle": "تبدیل قالب نمایش",
+    "command": "Base64 / UTF-8",
+    "description": "رمزگذاری نیست؛ فقط شکل نمایش数据 را عوض میکند.",
+    "tags": "encoding base64 utf8"
+  },
+  {
+    "category": "keywords",
+    "title": "RAID",
+    "subtitle": "آرایه دیسکها",
+    "command": "RAID 0/1/5/6/10",
+    "description": "ترکیب سرعت و/یا تحمل خطا.",
+    "tags": "raid disk storage redundancy"
+  },
+  {
+    "category": "keywords",
+    "title": "Port Forwarding",
+    "subtitle": "هدایت پورت",
+    "command": "WAN 3389 → LAN 192.168.1.5",
+    "description": "دسترسی به سرویس داخلی از بیرون؛ ریسک امنیتی دارد.",
+    "tags": "port forward nat firewall rdp"
+  },
+  {
+    "category": "keywords",
+    "title": "Broadcast",
+    "subtitle": "ارسال همگانی",
+    "command": "255.255.255.255",
+    "description": "بسته به تمام دستگاههایnetwork محلی ارسال میشود.",
+    "tags": "broadcast multicast unicast"
+  },
+  {
+    "category": "keywords",
+    "title": "Subnetting",
+    "subtitle": "تقسیم شبکه",
+    "command": "/24 → 4× /26",
+    "description": "کاهش broadcast domain و بهینهسازی آدرسها.",
+    "tags": "subnetting cidr network design"
+  },
+  {
+    "category": "quick-reference",
+    "title": "چیتشیت سابنتینگ سریع",
+    "subtitle": "مرجع محاسبهی سریع CIDR و هاستها",
+    "command": "/24 = 255.255.255.0 → 254 hosts\n/25 = 255.255.255.128 → 126 hosts\n/26 = 255.255.255.192 → 62 hosts\n/27 = 255.255.255.224 → 30 hosts\n/28 = 255.255.255.240 → 14 hosts\n/30 = 255.255.255.252 → 2 hosts",
+    "description": "تعداد هاستهای قابلاستفاده همیشه ۲^هیت_هاست منهای ۲ است (شبکه و broadcast).",
+    "tags": "subnet cidr cheat sheet hosts"
+  },
+  {
+    "category": "quick-reference",
+    "title": "پورتهای پرکاربرد",
+    "subtitle": "مرجع سریع شماره پورتها",
+    "command": "20/21 FTP · 22 SSH · 23 Telnet\n25 SMTP · 53 DNS · 67/68 DHCP\n80 HTTP · 110 POP3 · 123 NTP\n143 IMAP · 389 LDAP · 443 HTTPS\n445 SMB · 3389 RDP · 5900 VNC\n1433 MSSQL · 3306 MySQL · 5432 PostgreSQL",
+    "description": "هنگام باز کردن قاعده فایروال، حتماً پروتکل TCP یا UDP را هم مشخص کنید.",
+    "tags": "ports tcp udp firewall cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "کدهای وضعیت HTTP",
+    "subtitle": "پاسخهای سرور وب",
+    "command": "200 OK · 201 Created · 204 No Content\n301 Moved · 302 Found · 304 Not Modified\n400 Bad Request · 401 Unauthorized · 403 Forbidden\n404 Not Found · 405 Method Not Allowed\n408 Timeout · 429 Too Many Requests\n500 Server Error · 502 Bad Gateway · 503 Unavailable · 504 Gateway Timeout",
+    "description": "برای عیبیابی سامانهها و APIها.",
+    "tags": "http status codes api web cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "ریست کاملnetwork ویندوز",
+    "subtitle": "دستورات استاندارد رفع خطای No Internet",
+    "command": "ipconfig /release\nipconfig /renew\nipconfig /flushdns\nnetsh winsock reset\nnetsh int ip reset\nnetsh advfirewall reset",
+    "description": "پس از اجرا حتماً کامپیوتر را ریستارت کنید.",
+    "tags": "windows network reset winsock firewall cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "عیبیابی گامبهگامnetwork",
+    "subtitle": "رویهی پیشنهادی هلپدسک",
+    "command": "1. ipconfig /all        → آدرس و DNS\n2. ping 127.0.0.1        → پشته TCP/IP\n3. ping gateway         → لینک محلی\n4. ping 8.8.8.8          →connectivity خارجی\n5. nslookup example.com  → DNS\n6. tracert -d 8.8.8.8    → مسیر\n7. netstat -ano          → پورت/پروسه",
+    "description": "همیشه از نزدیکترین لایه به دورترین تست کنید.",
+    "tags": "troubleshooting workflow ping nslookup cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "دستورات MikroTik پایه",
+    "subtitle": "مرجع RouterOS",
+    "command": "/ip address print\n/ip route print\n/ip firewall filter print\n/ip firewall nat print\n/ip neighbor print\n/log print follow\n/system resource print\n/interface print detail",
+    "description": "دستورها از طریق WinBox یا SSH اجرا میشوند؛ روی موبایل فقط مرجعاند.",
+    "tags": "mikrotik routeros cheat sheet router"
+  },
+  {
+    "category": "quick-reference",
+    "title": "دستورات FortiGate پایه",
+    "subtitle": "مرجع FortiOS CLI",
+    "command": "get system status\nget system interface physical\nshow firewall policy\nshow firewall address\nshow router static\ndiagnose network ping <src> <dst>\ndiagnose sys top\nexecute log read",
+    "description": "برای مشاهدهی سریع وضعیت policy و اتصال.",
+    "tags": "fortigate fortiOS firewall cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "مدیریت سرویسهای ویندوز",
+    "subtitle": "مرجع سرویسها",
+    "command": "services.msc\net start\nnet stop Spooler\nsc query\nsc config Spooler start= auto\ntasklist /svc\ntaskkill /F /IM spoolsv.exe",
+    "description": "Print Spooler یکی از پرتکرارترین سرویسهای مشکلدار است.",
+    "tags": "windows services spooler sc cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "Active Directory پرکاربرد",
+    "subtitle": "مرجع دامین",
+    "command": "dsa.msc\ngpupdate /force\ngpresult /h C:\\gp.html\nnet user /domain\nnet group /domain\nwhoami /groups\nnltest /dsgetdc:domain.local",
+    "description": "برای عیبیابی عضویت دامین و GP.",
+    "tags": "active directory domain gpo user cheat sheet"
+  },
+  {
+    "category": "quick-reference",
+    "title": "SQL پرکاربرد",
+    "subtitle": "مرجع کوئریهای اساسی",
+    "command": "SELECT * FROM users WHERE id = 1;\nUPDATE users SET name = 'Ali' WHERE id = 1;\nINSERT INTO users (name) VALUES ('Ali');\nDELETE FROM users WHERE id = 1;\nSELECT COUNT(*) FROM tickets;\nGROUP BY status ORDER BY 1 DESC;",
+    "description": "همیشه قبل از UPDATE/DELETE یک SELECT با همان WHERE بگیرید.",
+    "tags": "sql select update delete cheat sheet database"
+  },
+  {
+    "category": "quick-reference",
+    "title": "مسیریابی و route سریع",
+    "subtitle": "مرجع روترها",
+    "command": "show ip interface brief\nshow ip route\nshow running-config\nshow arp\nshow cdp neighbors\nshow logging\nping <ip> source <interface>\ntraceroute <ip>",
+    "description": " Spanning-tree و STP را همیشه با show spanning-tree بررسی کنید.",
+    "tags": "cisco ios router cheat sheet route"
+  },
+  {
+    "category": "quick-reference",
+    "title": "امنیتnetwork چکلیست",
+    "subtitle": "موارد سریع بررسی امنیت",
+    "command": "✓ فایروال فقط پورتهای لازم باز\n✓ RDP به بیرون باز نباشد\n✓ رمزهای پیشفرض تغییر کردهاند\n✓ آپدیتهای امنیتی نصباند\n✓ لاگها به سرور مرکزی میروند\n✓ حساب ادمین پیشفرض غیرفعال است",
+    "description": "چکلیست سریع قبل از تحویل سرور یا سامانهnew.",
+    "tags": "security checklist firewall rdp hardening cheat sheet"
+  }
+]

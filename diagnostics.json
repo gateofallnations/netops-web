@@ -1,0 +1,2582 @@
+[
+  {
+    "id": "L1-01",
+    "category": "LAYER1",
+    "severity": "HIGH",
+    "title": {
+      "fa": "لینک پایین است (Link Down)",
+      "en": "Link is down"
+    },
+    "symptoms": [
+      {
+        "fa": "چراغ پورت خاموش یا قرمز است",
+        "en": "Port LED off or amber"
+      },
+      {
+        "fa": "LINK_DOWN در لاگ",
+        "en": "LINK_DOWN in logs"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "کابل معیوب یا جدا شده",
+        "en": "Faulty or unplugged cable"
+      },
+      {
+        "fa": "پورت سوئیچ غیرفعال",
+        "en": "Switch port administratively down"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "کابل و کانکتور را بررسی/تعویض کنید",
+        "en": "Check or replace cable and connector"
+      },
+      {
+        "fa": "وضعیت پورت: show interfaces status",
+        "en": "Check port state"
+      },
+      {
+        "fa": "پورت را no shutdown کنید",
+        "en": "Issue no shutdown on the port"
+      }
+    ],
+    "commands": [
+      "show interfaces status",
+      "show interfaces gig0/1",
+      "configure terminal → interface gi0/1 → no shutdown"
+    ]
+  },
+  {
+    "id": "L1-02",
+    "category": "LAYER1",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "عدم تطابق سرعت/دوپلکس",
+      "en": "Speed / duplex mismatch"
+    },
+    "symptoms": [
+      {
+        "fa": "کاهش شدید throughput",
+        "en": "Severe throughput drop"
+      },
+      {
+        "fa": "Collisions و CRC در آمار پورت",
+        "en": "Collisions and CRC errors"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "یک طرف auto و طرف دیگر 100Full",
+        "en": "One side auto, other 100Full"
+      },
+      {
+        "fa": "کابل Cat5 قدیمی",
+        "en": "Old Cat5 cabling"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "هر دو طرف را auto تنظیم کنید",
+        "en": "Set both sides to auto"
+      },
+      {
+        "fa": "آمار line errors را بررسی کنید",
+        "en": "Check interface error counters"
+      },
+      {
+        "fa": "کابل را تست کنید",
+        "en": "Certify the cable"
+      }
+    ],
+    "commands": [
+      "show interfaces gig0/1 counters errors",
+      "show interfaces gig0/1 status"
+    ]
+  },
+  {
+    "id": "L1-03",
+    "category": "LAYER1",
+    "severity": "HIGH",
+    "title": {
+      "fa": "خطاهای CRC و Frame روی اینترفیس",
+      "en": "CRC / frame errors on interface"
+    },
+    "symptoms": [
+      {
+        "fa": " ورودی CRC بالا",
+        "en": "High input CRC"
+      },
+      {
+        "fa": "Packet loss متناوب",
+        "en": "Intermittent packet loss"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "کابل آسیبدیده",
+        "en": "Damaged cable"
+      },
+      {
+        "fa": " transceiver معیوب",
+        "en": "Faulty transceiver"
+      },
+      {
+        "fa": "EMI از منبع برق",
+        "en": "EMI from power source"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "شمارندهها را پاک و مجدداً بسنجید",
+        "en": "Clear counters and monitor"
+      },
+      {
+        "fa": "SFP را تعویض کنید",
+        "en": "Replace SFP module"
+      },
+      {
+        "fa": "مسیر کابل را از منابع EMI دور کنید",
+        "en": "Reroute away from EMI"
+      }
+    ],
+    "commands": [
+      "clear counters",
+      "show interfaces gig0/1 counters errors",
+      "show interfaces transceiver"
+    ]
+  },
+  {
+    "id": "L1-04",
+    "category": "LAYER1",
+    "severity": "HIGH",
+    "title": {
+      "fa": "افت نوری فيبر (Optical attenuation)",
+      "en": "Fiber optical attenuation"
+    },
+    "symptoms": [
+      {
+        "fa": "لینک فیبر periodically down",
+        "en": "Fiber link flaps"
+      },
+      {
+        "fa": "Rx power پایین",
+        "en": "Low Rx power"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "کثیفی کانکتور",
+        "en": "Dirty connector"
+      },
+      {
+        "fa": "خم شدن بیش از حد فیبر",
+        "en": "Excessive bend radius"
+      },
+      {
+        "fa": "SFP ناسازگار",
+        "en": "Incompatible SFP"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "dBm_rx را اندازه بگیرید",
+        "en": "Measure Rx dBm"
+      },
+      {
+        "fa": "کانکتورها را تمیز کنید",
+        "en": "Clean connectors"
+      },
+      {
+        "fa": "از SFP تأییدشده استفاده کنید",
+        "en": "Use supported SFP"
+      }
+    ],
+    "commands": [
+      "show interfaces transceiver detail",
+      "show interfaces gig0/1"
+    ]
+  },
+  {
+    "id": "IP-01",
+    "category": "IP_DHCP",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "کلاینت IP نگرفته است",
+      "en": "Client has no IP address"
+    },
+    "symptoms": [
+      {
+        "fa": "آدرس 169.254.x.x",
+        "en": "APIPA 169.254.x.x"
+      },
+      {
+        "fa": "پیام DHCP failed",
+        "en": "DHCP failed message"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "سرور DHCP در دسترس نیست",
+        "en": "DHCP server unreachable"
+      },
+      {
+        "fa": "VLAN و DHCP relay اشتباه",
+        "en": "Wrong VLAN or relay"
+      },
+      {
+        "fa": " Scope تمام شده",
+        "en": "Scope exhausted"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "اتصال لایه ۱ را چک کنید",
+        "en": "Verify Layer 1"
+      },
+      {
+        "fa": "دستور ipconfig /all بررسی شود",
+        "en": "Run ipconfig /all"
+      },
+      {
+        "fa": " ip helper-address روی gateway تنظیم شود",
+        "en": "Set ip helper-address"
+      },
+      {
+        "fa": "لاگ DHCP سرور بررسی شود",
+        "en": "Check DHCP server logs"
+      }
+    ],
+    "commands": [
+      "ipconfig /all",
+      "ipconfig /renew",
+      "show running-config | include helper"
+    ]
+  },
+  {
+    "id": "IP-02",
+    "category": "IP_DHCP",
+    "severity": "HIGH",
+    "title": {
+      "fa": "استخر DHCP تمام شد (Pool exhausted)",
+      "en": "DHCP pool exhausted"
+    },
+    "symptoms": [
+      {
+        "fa": "کاربران جدید IP نمیگیرند",
+        "en": "New clients get no IP"
+      },
+      {
+        "fa": "هشدار Pool full",
+        "en": "Pool full alert"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "تعداد آدرس کمتر از تعداد کلاینت",
+        "en": "Too few addresses"
+      },
+      {
+        "fa": "LEASE های منقضی نشده",
+        "en": "Stale leases"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "استخر را گسترش دهید",
+        "en": "Expand the scope"
+      },
+      {
+        "fa": "LEASE_TIME را کاهش دهید",
+        "en": "Reduce lease time"
+      },
+      {
+        "fa": "آدرسهای رزروشده را پاکسازی کنید",
+        "en": "Clean stale reservations"
+      }
+    ],
+    "commands": [
+      "show ip dhcp pool",
+      "show ip dhcp binding"
+    ]
+  },
+  {
+    "id": "IP-03",
+    "category": "IP_DHCP",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "تداخل آدرس IP (Duplicate IP)",
+      "en": "Duplicate IP address"
+    },
+    "symptoms": [
+      {
+        "fa": "هشدار مکرر duplicate address",
+        "en": "Repeated duplicate warnings"
+      },
+      {
+        "fa": "قطعی متناوب",
+        "en": "Intermittent disconnect"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "دستگاهی با IP استاتیک تداخلکننده",
+        "en": "Rogue static-IP device"
+      },
+      {
+        "fa": "دو DHCP سرور",
+        "en": "Two DHCP servers"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "آدرس MAC صاحب IP را بیابید",
+        "en": "Find MAC owning the IP"
+      },
+      {
+        "fa": " ARP cache را پاک کنید",
+        "en": "Clear ARP cache"
+      },
+      {
+        "fa": "دستگاه متخلف را ایزوله کنید",
+        "en": "Isolate offending host"
+      }
+    ],
+    "commands": [
+      "arp -a",
+      "show ip arp | include 192.168",
+      "ipconfig /release && ipconfig /renew"
+    ]
+  },
+  {
+    "id": "IP-04",
+    "category": "IP_DHCP",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "ماسک یا گیتوی اشتباه",
+      "en": "Wrong subnet mask / gateway"
+    },
+    "symptoms": [
+      {
+        "fa": "دسترسی به LAN محلی ولی نه خارج",
+        "en": "Local LAN works, remote fails"
+      },
+      {
+        "fa": "مسیرهای عجیب",
+        "en": "Unexpected routes"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "ماسک /24 بجای /23",
+        "en": "/24 instead of /23"
+      },
+      {
+        "fa": "گیتوی خارج از سابنت",
+        "en": "Gateway outside subnet"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "ipconfig /all را با طراحی شبکه مقایسه کنید",
+        "en": "Compare ipconfig with design"
+      },
+      {
+        "fa": "ماسک و گیتوی را اصلاح کنید",
+        "en": "Correct mask and gateway"
+      },
+      {
+        "fa": " route print بررسی شود",
+        "en": "Check route table"
+      }
+    ],
+    "commands": [
+      "ipconfig /all",
+      "route print",
+      "ping <gateway>"
+    ]
+  },
+  {
+    "id": "DNS-01",
+    "category": "DNS",
+    "severity": "HIGH",
+    "title": {
+      "fa": "حل نام DNS شکست میخورد",
+      "en": "DNS name resolution fails"
+    },
+    "symptoms": [
+      {
+        "fa": " Ping با نام ناموفق ولی با IP موفق",
+        "en": "Ping by name fails, by IP works"
+      },
+      {
+        "fa": "خطای Server DNS failure",
+        "en": "DNS server failure"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "سرور DNS اشتباه تنظیم شده",
+        "en": "Wrong DNS server"
+      },
+      {
+        "fa": "رکورد حذف شده",
+        "en": "Missing record"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "nslookup بزنید",
+        "en": "Run nslookup"
+      },
+      {
+        "fa": "سرور DNS دیگری امتحان کنید",
+        "en": "Try alternate DNS"
+      },
+      {
+        "fa": "رکورد A/CNAME را بررسی کنید",
+        "en": "Verify A/CNAME record"
+      }
+    ],
+    "commands": [
+      "nslookup example.com",
+      "nslookup example.com 8.8.8.8",
+      "ipconfig /flushdns"
+    ]
+  },
+  {
+    "id": "DNS-02",
+    "category": "DNS",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "کش DNS منسوخ (Stale cache)",
+      "en": "Stale DNS cache"
+    },
+    "symptoms": [
+      {
+        "fa": "پس از تغییر IP نام قدیمی برگردانده میشود",
+        "en": "Old IP returned after change"
+      },
+      {
+        "fa": "TTL بالا",
+        "en": "High TTL"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "TTL زیاد رکورد",
+        "en": "High record TTL"
+      },
+      {
+        "fa": "کش محلی کلاینت",
+        "en": "Local client cache"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "کش را flush کنید",
+        "en": "Flush cache"
+      },
+      {
+        "fa": "TTL را موقتاً کاهش دهید",
+        "en": "Lower TTL temporarily"
+      }
+    ],
+    "commands": [
+      "ipconfig /flushdns",
+      "dscacheutil -flushcache",
+      "dig example.com"
+    ]
+  },
+  {
+    "id": "DNS-03",
+    "category": "DNS",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "نام داخلی resolving نمیشود (Split DNS)",
+      "en": "Internal name not resolving"
+    },
+    "symptoms": [
+      {
+        "fa": " نام internal.example در اینترنت یافت نمیشود",
+        "en": "Internal name not found publicly"
+      },
+      {
+        "fa": "DNAT هرز",
+        "en": "Hairpin NAT issue"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Zone داخلی روی DNS داخلی نیست",
+        "en": "Internal zone missing"
+      },
+      {
+        "fa": "forwarder اشتباه",
+        "en": "Wrong forwarder"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "سرور DNS داخلی را بعنوانprimary تنظیم کنید",
+        "en": "Set internal DNS primary"
+      },
+      {
+        "fa": "Conditional forwarder تنظیم کنید",
+        "en": "Configure conditional forwarder"
+      }
+    ],
+    "commands": [
+      "nslookup internal.example <internal-dns>",
+      "show running-config | include dns"
+    ]
+  },
+  {
+    "id": "DNS-04",
+    "category": "DNS",
+    "severity": "LOW",
+    "title": {
+      "fa": "جستجوی DNSکند",
+      "en": "Slow DNS lookups"
+    },
+    "symptoms": [
+      {
+        "fa": "تاخیر در باز شدن سایتها",
+        "en": "Slow page load"
+      },
+      {
+        "fa": "Timeout مکرر",
+        "en": "Frequent timeouts"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "سرور DNS دور",
+        "en": "Remote DNS server"
+      },
+      {
+        "fa": "IPv6 نرسیده",
+        "en": "Broken IPv6"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "از DNS نزدیکتر używać",
+        "en": "Use nearer resolver"
+      },
+      {
+        "fa": "IPv6 را تست کنید",
+        "en": "Test IPv6"
+      },
+      {
+        "fa": "زمان پاسخ را اندازه بگیرید",
+        "en": "Measure response time"
+      }
+    ],
+    "commands": [
+      "dig @<dns> example.com",
+      "ping -n 10 <dns>"
+    ]
+  },
+  {
+    "id": "RT-01",
+    "category": "ROUTING",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "گیتوی پیشفرض وجود ندارد",
+      "en": "Missing default gateway"
+    },
+    "symptoms": [
+      {
+        "fa": " ping IP بیرونی ناموفق",
+        "en": "External ping fails"
+      },
+      {
+        "fa": " route print خالی",
+        "en": "Empty route table"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "DHCO گیتوی ارسال نکرده",
+        "en": "DHCP did not send gateway"
+      },
+      {
+        "fa": "تنظیمات استاتیک حذف شده",
+        "en": "Static config removed"
+      }
+    ],
+    "steps": [
+      {
+        "fa": " ip route 0.0.0.0 0.0.0.0 <gw> اضافه کنید",
+        "en": "Add default route"
+      },
+      {
+        "fa": " DHCO scope گیتوی تنظیم شود",
+        "en": "Set gateway in DHCP scope"
+      }
+    ],
+    "commands": [
+      "show ip route",
+      "route print",
+      "ping <gateway>"
+    ]
+  },
+  {
+    "id": "RT-02",
+    "category": "ROUTING",
+    "severity": "HIGH",
+    "title": {
+      "fa": "مسیر استاتیک نادرست / مسیریابی نامتقارن",
+      "en": "Wrong static route / asymmetric routing"
+    },
+    "symptoms": [
+      {
+        "fa": "رفت و برگشت از مسیر متفاوت",
+        "en": "Asymmetric path"
+      },
+      {
+        "fa": "دسترسی متناوب",
+        "en": "Intermittent reachability"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "مسیر قدیمی باقی مانده",
+        "en": "Stale static route"
+      },
+      {
+        "fa": "دو gateway",
+        "en": "Multiple gateways"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "جدول مسیریابی بررسی شود",
+        "en": "Review routing table"
+      },
+      {
+        "fa": "tracert بگیرید",
+        "en": "Run traceroute"
+      },
+      {
+        "fa": "مسیر اشتباه حذف شود",
+        "en": "Remove wrong route"
+      }
+    ],
+    "commands": [
+      "show ip route <dest>",
+      "tracert <dest>",
+      "show ip route static"
+    ]
+  },
+  {
+    "id": "RT-03",
+    "category": "ROUTING",
+    "severity": "HIGH",
+    "title": {
+      "fa": "همسایه OSPF گیر کرده است",
+      "en": "OSPF neighbor stuck"
+    },
+    "symptoms": [
+      {
+        "fa": "همسایه در EXSTART/2WAY",
+        "en": "Neighbor in EXSTART/2WAY"
+      },
+      {
+        "fa": "جدول مسیریابی ناقص",
+        "en": "Incomplete routes"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "عدم تطابق MTU",
+        "en": "MTU mismatch"
+      },
+      {
+        "fa": "عدم تطابق Area یا authentication",
+        "en": "Area/auth mismatch"
+      },
+      {
+        "fa": "Hello timer متفاوت",
+        "en": "Hello timer mismatch"
+      }
+    ],
+    "steps": [
+      {
+        "fa": " show ip ospf neighbor بزنید",
+        "en": "Check OSPF neighbor"
+      },
+      {
+        "fa": "MTU و Hello را یکسان کنید",
+        "en": "Align MTU and timers"
+      },
+      {
+        "fa": "Authentication را بررسی کنید",
+        "en": "Verify authentication"
+      }
+    ],
+    "commands": [
+      "show ip ospf neighbor",
+      "show ip ospf interface",
+      "debug ip ospf adj"
+    ]
+  },
+  {
+    "id": "RT-04",
+    "category": "ROUTING",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "نشست BGP قطع یا ناپایدار",
+      "en": "BGP session down / flapping"
+    },
+    "symptoms": [
+      {
+        "fa": "وضعیت Idle/Active",
+        "en": "State Idle/Active"
+      },
+      {
+        "fa": "Prefixها ناپدید شدند",
+        "en": "Prefixes withdrawn"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "اشتباه AS-number یا neighbor",
+        "en": "Wrong AS or neighbor"
+      },
+      {
+        "fa": "TCP port 179 بسته",
+        "en": "TCP 179 blocked"
+      },
+      {
+        "fa": "Hold timer پایین",
+        "en": "Low hold timer"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "show ip bgp summary",
+        "en": "Check BGP summary"
+      },
+      {
+        "fa": "اتصال TCP 179 تست شود",
+        "en": "Test TCP 179"
+      },
+      {
+        "fa": "تنظیمات neighbor تصحیح شود",
+        "en": "Fix neighbor config"
+      }
+    ],
+    "commands": [
+      "show ip bgp summary",
+      "show ip bgp neighbors",
+      "telnet <peer> 179"
+    ]
+  },
+  {
+    "id": "RT-05",
+    "category": "ROUTING",
+    "severity": "HIGH",
+    "title": {
+      "fa": "حلقه مسیریابی (Routing loop)",
+      "en": "Routing loop"
+    },
+    "symptoms": [
+      {
+        "fa": "TTL exceeded",
+        "en": "TTL exceeded"
+      },
+      {
+        "fa": "tracert دور میزند",
+        "en": "Traceroute loops"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "مسیر استاتیک متناقض",
+        "en": "Conflicting static routes"
+      },
+      {
+        "fa": "ارتقای نادرست RIP/OSPF",
+        "en": "Bad redistribution"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "tracert بگیرید",
+        "en": "Run traceroute"
+      },
+      {
+        "fa": "مسیرها را در تمام روترها بررسی کنید",
+        "en": "Check routes on all routers"
+      },
+      {
+        "fa": " redistribiution را فیلتر کنید",
+        "en": "Filter redistribution"
+      }
+    ],
+    "commands": [
+      "tracert <dest>",
+      "show ip route <dest>",
+      "show ip protocols"
+    ]
+  },
+  {
+    "id": "SW-01",
+    "category": "SWITCHING",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "عدم تطابق VLAN",
+      "en": "VLAN mismatch"
+    },
+    "symptoms": [
+      {
+        "fa": "پورت دستگاه در VLAN اشتباه",
+        "en": "Device in wrong VLAN"
+      },
+      {
+        "fa": "دسترسی به gateway مقدور نیست",
+        "en": "Cannot reach gateway"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Access VLAN اشتباه",
+        "en": "Wrong access VLAN"
+      },
+      {
+        "fa": "Native VLAN متفاوت در trunk",
+        "en": "Native VLAN mismatch"
+      }
+    ],
+    "steps": [
+      {
+        "fa": " VLAN پورت را بررسی کنید",
+        "en": "Check port VLAN"
+      },
+      {
+        "fa": "Native VLAN دو طرف trunk یکسان شود",
+        "en": "Align native VLAN"
+      },
+      {
+        "fa": "پورت را در VLAN صحیح قرار دهید",
+        "en": "Assign correct VLAN"
+      }
+    ],
+    "commands": [
+      "show vlan brief",
+      "show interfaces trunk",
+      "show interfaces gi0/1 switchport"
+    ]
+  },
+  {
+    "id": "SW-02",
+    "category": "SWITCHING",
+    "severity": "HIGH",
+    "title": {
+      "fa": "VLAN مجاز روی Trunk نیست",
+      "en": "VLAN not allowed on trunk"
+    },
+    "symptoms": [
+      {
+        "fa": "یک VLAN روی سوئیچ کار نمیکند",
+        "en": "VLAN fails across switches"
+      },
+      {
+        "fa": "Trunk up ولی ترافیک عبور نمیکند",
+        "en": "Trunk up but no traffic"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "allow vlan لیست نشده",
+        "en": "VLAN not in allowed list"
+      },
+      {
+        "fa": "VTP/pruning",
+        "en": "VTP pruning"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "show interfaces trunk بزنید",
+        "en": "Check trunk"
+      },
+      {
+        "fa": "VLAN را به allowed اضافه کنید",
+        "en": "Add VLAN to allowed list"
+      }
+    ],
+    "commands": [
+      "show interfaces trunk",
+      "switchport trunk allowed vlan add 20"
+    ]
+  },
+  {
+    "id": "SW-03",
+    "category": "SWITCHING",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "حلقه لایه ۲ / طوفان broadcast",
+      "en": "Layer 2 loop / broadcast storm"
+    },
+    "symptoms": [
+      {
+        "fa": "CPU سوئیچ ۱۰۰٪",
+        "en": "Switch CPU 100%"
+      },
+      {
+        "fa": "چراغها سریع چشمک میزنند",
+        "en": "Port LEDs blinking rapidly"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "کابل دوبل между دو سوئیچ",
+        "en": "Duplicate cable between switches"
+      },
+      {
+        "fa": "STP غیرفعال",
+        "en": "STP disabled"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "پورتهای با ترافیک بالا بیابید",
+        "en": "Find high-traffic ports"
+      },
+      {
+        "fa": "STP را فعال کنید",
+        "en": "Enable STP / RSTP"
+      },
+      {
+        "fa": "کابل اضافی را جداسازی کنید",
+        "en": "Remove redundant cable"
+      },
+      {
+        "fa": "BPDU Guard را فعال کنید",
+        "en": "Enable BPDU guard"
+      }
+    ],
+    "commands": [
+      "show interfaces counters | include broadcast",
+      "show spanning-tree",
+      "show logging | include %SPANTREE"
+    ]
+  },
+  {
+    "id": "SW-04",
+    "category": "SWITCHING",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "جدول MAC پر یا MAC Flapping",
+      "en": "MAC table full / flapping"
+    },
+    "symptoms": [
+      {
+        "fa": "هشدار MAC flapping",
+        "en": "MAC flapping log"
+      },
+      {
+        "fa": "unicast به همه پورتها میرود",
+        "en": "Unicast flooded"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "حلقه لایه ۲",
+        "en": "Layer 2 loop"
+      },
+      {
+        "fa": "تعداد MAC بیش از ظرفیت",
+        "en": "MAC overflow"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "منبع MAC flapping را بیابید",
+        "en": "Locate flapping MAC"
+      },
+      {
+        "fa": "port-security تنظیم کنید",
+        "en": "Configure port-security"
+      }
+    ],
+    "commands": [
+      "show mac address-table | include <mac>",
+      "show logging | include MACFLAP",
+      "show port-security"
+    ]
+  },
+  {
+    "id": "SW-05",
+    "category": "SWITCHING",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "نقض امنیت پورت (Port Security)",
+      "en": "Port security violation"
+    },
+    "symptoms": [
+      {
+        "fa": "پورت err-disable شده",
+        "en": "Port err-disabled"
+      },
+      {
+        "fa": "دستگاه متصل نمیشود",
+        "en": "Device cannot connect"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "تعداد MAC بیش از.maximum",
+        "en": "Too many MAC addresses"
+      },
+      {
+        "fa": "MAC جدید غیرمجاز",
+        "en": "Unexpected MAC"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "علت errdisable ببینید",
+        "en": "Check errdisable reason"
+      },
+      {
+        "fa": "پورت راiag recover کنید",
+        "en": "Recover the port"
+      },
+      {
+        "fa": "maximum و action را تنظیم کنید",
+        "en": "Set maximum and violation action"
+      }
+    ],
+    "commands": [
+      "show interfaces status err-disabled",
+      "errdisable recovery cause psecure-violation",
+      "show port-security interface gi0/1"
+    ]
+  },
+  {
+    "id": "WL-01",
+    "category": "WIRELESS",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "سیگنال ضعیف Wi-Fi",
+      "en": "Weak Wi-Fi signal"
+    },
+    "symptoms": [
+      {
+        "fa": "RSSI پایینتر از -70 dBm",
+        "en": "RSSI below -70 dBm"
+      },
+      {
+        "fa": "سرعت پایین",
+        "en": "Low data rate"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "فاصله و موانع",
+        "en": "Distance and obstacles"
+      },
+      {
+        "fa": "AP نادرست نصب شده",
+        "en": "Poor AP placement"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "نقشه حرارتی بگیرید",
+        "en": "Perform site survey"
+      },
+      {
+        "fa": "AP اضافه یا جابجا کنید",
+        "en": "Add or relocate AP"
+      },
+      {
+        "fa": "کانال و قدرت تنظیم کنید",
+        "en": "Tune channel/power"
+      }
+    ],
+    "commands": [
+      "show ap summary",
+      "show wlan summary",
+      "show client summary"
+    ]
+  },
+  {
+    "id": "WL-02",
+    "category": "WIRELESS",
+    "severity": "HIGH",
+    "title": {
+      "fa": "احراز هویت Wi-Fi شکست میخورد",
+      "en": "Wi-Fi authentication failure"
+    },
+    "symptoms": [
+      {
+        "fa": "پیام Wrong password",
+        "en": "Wrong password"
+      },
+      {
+        "fa": "دستگاه متصل نمیشود",
+        "en": "Client cannot associate"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "PSK اشتباه",
+        "en": "Wrong PSK"
+      },
+      {
+        "fa": "RADIUS/EAP در دسترس نیست",
+        "en": "RADIUS/EAP down"
+      },
+      {
+        "fa": "MAC filtering",
+        "en": "MAC filtering"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "لاگ RADIUS بررسی شود",
+        "en": "Check RADIUS logs"
+      },
+      {
+        "fa": "PSK را مجدداً وارد کنید",
+        "en": "Re-enter PSK"
+      },
+      {
+        "fa": "گواهی client معتبر باشد",
+        "en": "Check client certificate"
+      }
+    ],
+    "commands": [
+      "show radius statistics",
+      "show wlan <id>",
+      "show logging | include DOT1X"
+    ]
+  },
+  {
+    "id": "WL-03",
+    "category": "WIRELESS",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "تداخل کانال",
+      "en": "Channel interference"
+    },
+    "symptoms": [
+      {
+        "fa": "نویز بالا",
+        "en": "High noise floor"
+      },
+      {
+        "fa": "Retransmission بالا",
+        "en": "High retries"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "کانال مشترک با AP همسایه",
+        "en": "Overlapping channels"
+      },
+      {
+        "fa": "دستگاههای مایکروویو/بلوتوث",
+        "en": "Microwave/Bluetooth"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "اسکن طیف بگیرید",
+        "en": "Scan spectrum"
+      },
+      {
+        "fa": "کانال 1/6/11 را انتخاب کنید",
+        "en": "Use 1/6/11 on 2.4GHz"
+      },
+      {
+        "fa": "از 5GHz استفاده کنید",
+        "en": "Prefer 5GHz"
+      }
+    ],
+    "commands": [
+      "show ap auto-rf",
+      "show rf-profile"
+    ]
+  },
+  {
+    "id": "WL-04",
+    "category": "WIRELESS",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "Roaming ضعیف / Client چسبنده",
+      "en": "Sticky client / roaming issues"
+    },
+    "symptoms": [
+      {
+        "fa": "کلاینت به AP دور متصل میماند",
+        "en": "Client sticks to far AP"
+      },
+      {
+        "fa": "قطع هنگام حرکت",
+        "en": "Drops while moving"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "آستانه RSSI نامناسب",
+        "en": "Wrong RSSI threshold"
+      },
+      {
+        "fa": "تنظیمات 802.11r/k/v",
+        "en": "802.11r/k/v config"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "حداقل RSSI تنظیم کنید",
+        "en": "Set minimum RSSI"
+      },
+      {
+        "fa": "802.11r را فعال کنید",
+        "en": "Enable 802.11r"
+      },
+      {
+        "fa": "قدرت APها را تنظیم کنید",
+        "en": "Tune AP power"
+      }
+    ],
+    "commands": [
+      "show wlan <id>",
+      "show client detail <mac>"
+    ]
+  },
+  {
+    "id": "FW-01",
+    "category": "FIREWALL",
+    "severity": "HIGH",
+    "title": {
+      "fa": "پورت توسط فایروال بسته شده",
+      "en": "Port blocked by firewall"
+    },
+    "symptoms": [
+      {
+        "fa": "Connection refused/timeout",
+        "en": "Connection refused/timeout"
+      },
+      {
+        "fa": "لاگ deny",
+        "en": "Deny log"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Policy پیشفرض deny",
+        "en": "Default deny policy"
+      },
+      {
+        "fa": "ACL ترتیب اشتباه",
+        "en": "ACL order issue"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "لاگ ترافیک بررسی شود",
+        "en": "Check traffic logs"
+      },
+      {
+        "fa": "policy مربوطه اضافه شود",
+        "en": "Add allow policy"
+      },
+      {
+        "fa": "telnet port تست شود",
+        "en": "Test port reachability"
+      }
+    ],
+    "commands": [
+      "show log | match deny",
+      "show policy | match <ip>",
+      "test connection"
+    ]
+  },
+  {
+    "id": "FW-02",
+    "category": "FIREWALL",
+    "severity": "HIGH",
+    "title": {
+      "fa": "NAT ترجمه نشد",
+      "en": "NAT translation failure"
+    },
+    "symptoms": [
+      {
+        "fa": "پاسخ برنمیگردد",
+        "en": "No return traffic"
+      },
+      {
+        "fa": "no translation در لاگ",
+        "en": "No translation in logs"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Internal IP خارج از policy NAT",
+        "en": "Source not in NAT policy"
+      },
+      {
+        "fa": "Pool NAT تمام شد",
+        "en": "NAT pool exhausted"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "session table بررسی شود",
+        "en": "Check session table"
+      },
+      {
+        "fa": "policy NAT اصلاح شود",
+        "en": "Fix NAT policy"
+      },
+      {
+        "fa": "Pool گسترش یابد",
+        "en": "Expand NAT pool"
+      }
+    ],
+    "commands": [
+      "show session all",
+      "show nat policy",
+      "show log traffic"
+    ]
+  },
+  {
+    "id": "FW-03",
+    "category": "FIREWALL",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "تونل VPN قطع است (IPsec)",
+      "en": "IPsec VPN tunnel down"
+    },
+    "symptoms": [
+      {
+        "fa": "Phase 1/2 down",
+        "en": "Phase 1/2 down"
+      },
+      {
+        "fa": "ترافیک عبور نمیکند",
+        "en": "No traffic through tunnel"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Pre-shared key اشتباه",
+        "en": "Wrong pre-shared key"
+      },
+      {
+        "fa": "عدم تطابق proposal",
+        "en": "Proposal mismatch"
+      },
+      {
+        "fa": "UDP 500/4500 بسته",
+        "en": "UDP 500/4500 blocked"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "وضعیت IKE بررسی شود",
+        "en": "Check IKE status"
+      },
+      {
+        "fa": "PSK و proposal یکسان شود",
+        "en": "Align PSK and proposals"
+      },
+      {
+        "fa": "پورتهای UDP باز شوند",
+        "en": "Open UDP 500/4500"
+      }
+    ],
+    "commands": [
+      "show vpn ipsec sa",
+      "show crypto isakmp sa",
+      "debug ike"
+    ]
+  },
+  {
+    "id": "FW-04",
+    "category": "FIREWALL",
+    "severity": "HIGH",
+    "title": {
+      "fa": "جدول نشست فایروال پر شد",
+      "en": "Firewall session table full"
+    },
+    "symptoms": [
+      {
+        "fa": "اتصالهای جدید رد میشوند",
+        "en": "New sessions dropped"
+      },
+      {
+        "fa": "هشدار session limit",
+        "en": "Session limit alert"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "حمله/اسکن",
+        "en": "Attack or scan"
+      },
+      {
+        "fa": "Session timeout بالا",
+        "en": "High session timeout"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "تعداد نشستها بررسی شود",
+        "en": "Check session count"
+      },
+      {
+        "fa": "منبع ترافیک غیرعادی مسدود شود",
+        "en": "Block abnormal source"
+      },
+      {
+        "fa": "Timeout کاهش یابد",
+        "en": "Reduce session timeout"
+      }
+    ],
+    "commands": [
+      "show session info",
+      "show session all | count"
+    ]
+  },
+  {
+    "id": "PF-01",
+    "category": "PERFORMANCE",
+    "severity": "HIGH",
+    "title": {
+      "fa": "تاخیر بالا (Latency)",
+      "en": "High latency"
+    },
+    "symptoms": [
+      {
+        "fa": "ping بالای 100ms",
+        "en": "Ping over 100ms"
+      },
+      {
+        "fa": "برنامهها کند",
+        "en": "Slow applications"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "مسیر طولانی",
+        "en": "Long path"
+      },
+      {
+        "fa": "اشباع لینک",
+        "en": "Link congestion"
+      },
+      {
+        "fa": "دستکاری QoS",
+        "en": "Wrong QoS queuing"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "ping و traceroute بگیرید",
+        "en": "Run ping and traceroute"
+      },
+      {
+        "fa": "محل ایجاد تاخیر را بیابید",
+        "en": "Locate delay hop"
+      },
+      {
+        "fa": "QoS و شکلدهی ترافیک بررسی شود",
+        "en": "Review QoS"
+      }
+    ],
+    "commands": [
+      "ping -n 50 <host>",
+      "tracert <host>",
+      "show interfaces | include load"
+    ]
+  },
+  {
+    "id": "PF-02",
+    "category": "PERFORMANCE",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "افت بسته (Packet loss)",
+      "en": "Packet loss"
+    },
+    "symptoms": [
+      {
+        "fa": "درصد loss بالا",
+        "en": "High loss percentage"
+      },
+      {
+        "fa": "صدا قطع و وصل",
+        "en": "Choppy voice"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "خطای لایه ۱",
+        "en": "Layer 1 errors"
+      },
+      {
+        "fa": "صف پر در سوئیچ/روتر",
+        "en": "Full queues"
+      },
+      {
+        "fa": "CPU بالا",
+        "en": "High CPU"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "ping با بستههای بزرگ تست شود",
+        "en": "Test with large pings"
+      },
+      {
+        "fa": "شمارنده خطا بررسی شود",
+        "en": "Check error counters"
+      },
+      {
+        "fa": "CPU device چک شود",
+        "en": "Check device CPU"
+      }
+    ],
+    "commands": [
+      "ping -n 100 -l 1400 <host>",
+      "show interfaces counters errors",
+      "show processes cpu"
+    ]
+  },
+  {
+    "id": "PF-03",
+    "category": "PERFORMANCE",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "لرزش (Jitter)",
+      "en": "Jitter"
+    },
+    "symptoms": [
+      {
+        "fa": "زمان رفت و برگشت متغیر",
+        "en": "Variable RTT"
+      },
+      {
+        "fa": "کیفیت صدا/ویدیو پایین",
+        "en": "Poor voice/video"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "صف بندی نامناسب",
+        "en": "Improper queuing"
+      },
+      {
+        "fa": "ترافیک انبوه",
+        "en": "Bursty traffic"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "جitter را اندازه بگیرید",
+        "en": "Measure jitter"
+      },
+      {
+        "fa": "اولویت VoIP تنظیم شود",
+        "en": "Prioritize RTP"
+      },
+      {
+        "fa": "شکلدهی ترافیک اعمال کنید",
+        "en": "Apply traffic shaping"
+      }
+    ],
+    "commands": [
+      "ping -n 50 <host>",
+      "show policy-map interface",
+      "show queue"
+    ]
+  },
+  {
+    "id": "PF-04",
+    "category": "PERFORMANCE",
+    "severity": "HIGH",
+    "title": {
+      "fa": "اشباع پهنای باند",
+      "en": "Bandwidth saturation"
+    },
+    "symptoms": [
+      {
+        "fa": "استفاده لینک ۹۰٪+",
+        "en": "Link utilization over 90%"
+      },
+      {
+        "fa": "زمان بارگذاری بالا",
+        "en": "Slow downloads"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "ترافیک غیرمجاز/backup",
+        "en": "Unauthorized traffic or backup"
+      },
+      {
+        "fa": "نبود QoS",
+        "en": "No QoS"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "اندازهگیری ترافیک",
+        "en": "Measure traffic"
+      },
+      {
+        "fa": "منبع پرمصرف بیابید",
+        "en": "Find top talkers"
+      },
+      {
+        "fa": "ارتقای لینک یا QoS",
+        "en": "Upgrade link or apply QoS"
+      }
+    ],
+    "commands": [
+      "show interfaces | include load",
+      "show ip traffic",
+      "show top-talkers"
+    ]
+  },
+  {
+    "id": "SRV-01",
+    "category": "SERVER",
+    "severity": "HIGH",
+    "title": {
+      "fa": "خطای 502/503/504 وبسرور",
+      "en": "Web server 502/503/504"
+    },
+    "symptoms": [
+      {
+        "fa": "صفحه خطا",
+        "en": "Error page"
+      },
+      {
+        "fa": "سرویس پاسخ نمیدهد",
+        "en": "Service unresponsive"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Backend down",
+        "en": "Backend down"
+      },
+      {
+        "fa": "Timeout پروکسی",
+        "en": "Proxy timeout"
+      },
+      {
+        "fa": "منابع سرور تمام شد",
+        "en": "Server resources exhausted"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "لاگ وبسرور بررسی شود",
+        "en": "Check web server logs"
+      },
+      {
+        "fa": "وضعیت سرویس बत्त",
+        "en": "Check service status"
+      },
+      {
+        "fa": "CPU/RAM/ Disk بررسی شود",
+        "en": "Check resources"
+      }
+    ],
+    "commands": [
+      "systemctl status nginx",
+      "tail -f /var/log/nginx/error.log",
+      "curl -I http://localhost"
+    ]
+  },
+  {
+    "id": "SRV-02",
+    "category": "SERVER",
+    "severity": "HIGH",
+    "title": {
+      "fa": "ارسال ایمیل ناموفق",
+      "en": "Mail delivery failure"
+    },
+    "symptoms": [
+      {
+        "fa": "ایمیل در صف گیر کرده",
+        "en": "Mail queued"
+      },
+      {
+        "fa": "Bounce message",
+        "en": "Bounce message"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "SMTP relay بسته",
+        "en": "SMTP relay blocked"
+      },
+      {
+        "fa": "رکورد MX/SPF اشتباه",
+        "en": "Wrong MX/SPF"
+      },
+      {
+        "fa": "IP در لیست سیاه",
+        "en": "IP blacklisted"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "صف ایمیل بررسی شود",
+        "en": "Check mail queue"
+      },
+      {
+        "fa": "رکوردها تأیید شود",
+        "en": "Verify DNS records"
+      },
+      {
+        "fa": "Port 25 تست شود",
+        "en": "Test port 25"
+      }
+    ],
+    "commands": [
+      "mailq",
+      "nslookup -type=MX domain",
+      "telnet mail 25"
+    ]
+  },
+  {
+    "id": "SRV-03",
+    "category": "SERVER",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "دسترسی به فایل share رد شد",
+      "en": "SMB file share access denied"
+    },
+    "symptoms": [
+      {
+        "fa": "خطای Access denied",
+        "en": "Access denied"
+      },
+      {
+        "fa": "نام share یافت نشد",
+        "en": "Share not found"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "مجوز NTFS/share",
+        "en": "NTFS/share permission"
+      },
+      {
+        "fa": "سرویسiert SMB خاموش",
+        "en": "SMB service off"
+      },
+      {
+        "fa": "قفل نسخه SMB",
+        "en": "SMB version mismatch"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "مجوزها بررسی شود",
+        "en": "Check permissions"
+      },
+      {
+        "fa": "سرویس SMB فعال شود",
+        "en": "Enable SMB service"
+      },
+      {
+        "fa": "از SMB2/3 استفاده کنید",
+        "en": "Use SMB2/3"
+      }
+    ],
+    "commands": [
+      "net use \\\\\\\\server\\\\share",
+      "Get-SmbConnection",
+      "net share"
+    ]
+  },
+  {
+    "id": "SRV-04",
+    "category": "SERVER",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "احراز هویت دامین شکست خورد (Kerberos)",
+      "en": "Domain authentication failure"
+    },
+    "symptoms": [
+      {
+        "fa": "خطای Logon failure",
+        "en": "Logon failure"
+      },
+      {
+        "fa": "دسترسی به منابع دامین ندارند",
+        "en": "No domain resource access"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "انحراف ساعت بیش از ۵ دقیقه",
+        "en": "Time skew over 5 minutes"
+      },
+      {
+        "fa": "DC در دسترس نیست",
+        "en": "DC unreachable"
+      },
+      {
+        "fa": "SPN اشتباه",
+        "en": "Wrong SPN"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "زمان و NTP را همگام کنید",
+        "en": "Sync time / NTP"
+      },
+      {
+        "fa": "DCها را بررسی کنید",
+        "en": "Check DCs"
+      },
+      {
+        "fa": "SPN را ثبت کنید",
+        "en": "Register SPN"
+      }
+    ],
+    "commands": [
+      "w32tm /query /status",
+      "nltest /dsgetdc:domain",
+      "setspn -L <account>"
+    ]
+  },
+  {
+    "id": "SRV-05",
+    "category": "SERVER",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "گواهی SSL منقضی شد",
+      "en": "Expired SSL certificate"
+    },
+    "symptoms": [
+      {
+        "fa": "هشدار امنیتی مرورگر",
+        "en": "Browser warning"
+      },
+      {
+        "fa": "دستگاهها refuse میکنند",
+        "en": "Clients refuse connection"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "گواهی منقضی",
+        "en": "Certificate expired"
+      },
+      {
+        "fa": "زنجیره ناقص",
+        "en": "Incomplete chain"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "گواهی را تمدید کنید",
+        "en": "Renew certificate"
+      },
+      {
+        "fa": "زنجیره کامل نصب شود",
+        "en": "Install full chain"
+      }
+    ],
+    "commands": [
+      "openssl s_client -connect host:443",
+      "certutil -store My"
+    ]
+  },
+  {
+    "id": "VR-01",
+    "category": "VIRTUAL",
+    "severity": "HIGH",
+    "title": {
+      "fa": "ماشین مجازی شبکه ندارد",
+      "en": "VM has no network"
+    },
+    "symptoms": [
+      {
+        "fa": "VM نمیتواند ping بزند",
+        "en": "VM cannot ping"
+      },
+      {
+        "fa": "NIC خاموش",
+        "en": "NIC disconnected"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "vSwitch اشتباه",
+        "en": "Wrong vSwitch"
+      },
+      {
+        "fa": "Portgroup VLAN نادرست",
+        "en": "Wrong portgroup VLAN"
+      },
+      {
+        "fa": "VMNIC آفلاین",
+        "en": "VMNIC offline"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "Connectivity VM بررسی شود",
+        "en": "Check VM connectivity"
+      },
+      {
+        "fa": "VLAN portgroup تطابق دهید",
+        "en": "Align portgroup VLAN"
+      },
+      {
+        "fa": "VMNIC را فعال کنید",
+        "en": "Bring VMNIC up"
+      }
+    ],
+    "commands": [
+      "esxcli network vswitch standard list",
+      "esxcli network nic list",
+      "Get-VirtualPortGroup"
+    ]
+  },
+  {
+    "id": "VR-02",
+    "category": "VIRTUAL",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "تگ VLAN روی vSwitch اشتباه",
+      "en": "Wrong VLAN tagging on vSwitch"
+    },
+    "symptoms": [
+      {
+        "fa": "VMها در VLAN متفاوت دیده میشوند",
+        "en": "VMs in wrong VLAN"
+      },
+      {
+        "fa": "ترافیک Trunk عبور نمیکند",
+        "en": "Trunk traffic not passing"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "VLAN ID اشتباه",
+        "en": "Wrong VLAN ID"
+      },
+      {
+        "fa": "VGT درست تنظیم نشده",
+        "en": "VGT misconfigured"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "VLAN پورتگروپ بررسی شود",
+        "en": "Check portgroup VLAN"
+      },
+      {
+        "fa": "با سوئیچ فیزیکی هماهنگ کنید",
+        "en": "Align with physical switch"
+      }
+    ],
+    "commands": [
+      "esxcli network vswitch standard portgroup list",
+      "show interfaces trunk"
+    ]
+  },
+  {
+    "id": "VR-03",
+    "category": "VIRTUAL",
+    "severity": "HIGH",
+    "title": {
+      "fa": "عملکرد شبکه VM ضعیف",
+      "en": "Poor VM network performance"
+    },
+    "symptoms": [
+      {
+        "fa": " throughput پایین",
+        "en": "Low throughput"
+      },
+      {
+        "fa": "CPU بالا",
+        "en": "High CPU"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "از E1000 بجای VMXNET3",
+        "en": "E1000 instead of VMXNET3"
+      },
+      {
+        "fa": "NIC teaming نادرست",
+        "en": "Wrong NIC teaming"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "به VMXNET3 ارتقا دهید",
+        "en": "Upgrade to VMXNET3"
+      },
+      {
+        "fa": "Teaming policy بررسی شود",
+        "en": "Review teaming"
+      },
+      {
+        "fa": "RSS/TSO فعال کنید",
+        "en": "Enable RSS/TSO"
+      }
+    ],
+    "commands": [
+      "esxcli network nic stats get",
+      "Get-VMNetworkAdapter"
+    ]
+  },
+  {
+    "id": "VC-01",
+    "category": "VOICE",
+    "severity": "HIGH",
+    "title": {
+      "fa": "ثبت SIP ناموفق",
+      "en": "SIP registration failure"
+    },
+    "symptoms": [
+      {
+        "fa": "تلفن Register نمیشود",
+        "en": "Phone not registered"
+      },
+      {
+        "fa": "خطای 401/403",
+        "en": "401/403 error"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Password/ credentials اشتباه",
+        "en": "Wrong credentials"
+      },
+      {
+        "fa": "SIP server در دسترس نیست",
+        "en": "SIP server down"
+      },
+      {
+        "fa": "ACL",
+        "en": "ACL"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "تنظیمات تلفن بررسی شود",
+        "en": "Check phone config"
+      },
+      {
+        "fa": "سرویس SIP چک شود",
+        "en": "Check SIP service"
+      },
+      {
+        "fa": "پورت 5060 باز باشد",
+        "en": "Ensure port 5060 open"
+      }
+    ],
+    "commands": [
+      "ping <pbx>",
+      "telnet <pbx> 5060",
+      "sip show peers"
+    ]
+  },
+  {
+    "id": "VC-02",
+    "category": "VOICE",
+    "severity": "HIGH",
+    "title": {
+      "fa": "صدای یکطرفه",
+      "en": "One-way audio"
+    },
+    "symptoms": [
+      {
+        "fa": "یک طرف صدا نمیشنود",
+        "en": "One side hears nothing"
+      },
+      {
+        "fa": "NAT",
+        "en": "NAT"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "NAT traversal نادرست",
+        "en": "Wrong NAT traversal"
+      },
+      {
+        "fa": "RTP پورت بسته",
+        "en": "RTP ports blocked"
+      },
+      {
+        "fa": "firewall ALG",
+        "en": "Firewall ALG"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "پورتهای RTP باز کنید",
+        "en": "Open RTP ports"
+      },
+      {
+        "fa": "STUN/TURN تنظیم کنید",
+        "en": "Configure STUN/TURN"
+      },
+      {
+        "fa": "ALG را خاموش کنید",
+        "en": "Disable SIP ALG"
+      }
+    ],
+    "commands": [
+      "sip set debug on",
+      "show rtp statistics"
+    ]
+  },
+  {
+    "id": "VC-03",
+    "category": "VOICE",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "کیفیت تماس پایین",
+      "en": "Poor call quality"
+    },
+    "symptoms": [
+      {
+        "fa": "بریدگی صدا",
+        "en": "Choppy audio"
+      },
+      {
+        "fa": "Echo",
+        "en": "Echo"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "Jitter/loss",
+        "en": "Jitter/loss"
+      },
+      {
+        "fa": "codec ناسازگار",
+        "en": "Codec mismatch"
+      },
+      {
+        "fa": "QoS نادرست",
+        "en": "Wrong QoS"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "MOS اندازه بگیرید",
+        "en": "Measure MOS"
+      },
+      {
+        "fa": "QoS برای RTP تنظیم کنید",
+        "en": "Prioritize RTP"
+      },
+      {
+        "fa": "codec را هماهنگ کنید",
+        "en": "Align codecs"
+      }
+    ],
+    "commands": [
+      "show quality metrics",
+      "ping -n 100 <pbx>"
+    ]
+  },
+  {
+    "id": "PR-01",
+    "category": "PRINTER",
+    "severity": "MEDIUM",
+    "title": {
+      "fa": "چاپگر / پرینتر آفلاین است",
+      "en": "Printer offline"
+    },
+    "symptoms": [
+      {
+        "fa": "وضعیت Offline",
+        "en": "Status offline"
+      },
+      {
+        "fa": "صف گیر کرده",
+        "en": "Stuck queue"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "اتصال شبکه/USB قطع",
+        "en": "Network/USB disconnected"
+      },
+      {
+        "fa": "سرویس spooler متوقف",
+        "en": "Spooler stopped"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "اتصال فیزیکی چک شود",
+        "en": "Check physical connection"
+      },
+      {
+        "fa": "Spooler را restart کنید",
+        "en": "Restart spooler"
+      },
+      {
+        "fa": "صف را پاک کنید",
+        "en": "Clear print queue"
+      }
+    ],
+    "commands": [
+      "Get-Printer | Select Name,PortName",
+      "restart-service spooler",
+      "ping <printer-ip>"
+    ]
+  },
+  {
+    "id": "PR-02",
+    "category": "PRINTER",
+    "severity": "LOW",
+    "title": {
+      "fa": "چاپ نمیشود (صف گیر کرده)",
+      "en": "Print job stuck in queue"
+    },
+    "symptoms": [
+      {
+        "fa": "Jobها باقی میمانند",
+        "en": "Jobs remain"
+      },
+      {
+        "fa": "چاپگر پاسخ نمیدهد",
+        "en": "Printer not responding"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "درایور ناسازگار",
+        "en": "Wrong driver"
+      },
+      {
+        "fa": "Disk پر روی سرور چاپ",
+        "en": "Print server disk full"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "صف را پاک و ارسال مجدد",
+        "en": "Clear and resend"
+      },
+      {
+        "fa": "درایور را بروزرسانی کنید",
+        "en": "Update driver"
+      },
+      {
+        "fa": "فضای دیسک brرسی شود",
+        "en": "Check disk space"
+      }
+    ],
+    "commands": [
+      "Get-PrintJob | Remove-PrintJob",
+      "Get-PSDrive C"
+    ]
+  },
+  {
+    "id": "SC-01",
+    "category": "SECURITY",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "جعل ARP / حمله MITM",
+      "en": "ARP spoofing / MITM"
+    },
+    "symptoms": [
+      {
+        "fa": "هشدار duplicate gateway MAC",
+        "en": "Duplicate gateway MAC"
+      },
+      {
+        "fa": "قطعی متناوب",
+        "en": "Intermittent outage"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "دستگاه مخرب در LAN",
+        "en": "Rogue host on LAN"
+      },
+      {
+        "fa": "نبود Dynamic ARP Inspection",
+        "en": "No DAI"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "جدول ARP بررسی شود",
+        "en": "Inspect ARP table"
+      },
+      {
+        "fa": "DAI و DHCP snooping فعال کنید",
+        "en": "Enable DAI and DHCP snooping"
+      },
+      {
+        "fa": "دستگاه مخرب ایزوله شود",
+        "en": "Isolate attacker"
+      }
+    ],
+    "commands": [
+      "arp -a",
+      "show ip arp",
+      "show dhcp snooping binding"
+    ]
+  },
+  {
+    "id": "SC-02",
+    "category": "SECURITY",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "حمله SYN flood / DDoS",
+      "en": "SYN flood / DDoS"
+    },
+    "symptoms": [
+      {
+        "fa": "نشستهای نیمهباز زیاد",
+        "en": "Many half-open sessions"
+      },
+      {
+        "fa": "سرویس از دسترس خارج",
+        "en": "Service unavailable"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "ترافیک مخرب",
+        "en": "Malicious traffic"
+      },
+      {
+        "fa": "نبود rate limiting",
+        "en": "No rate limiting"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "منبع ترافیک مسدود شود",
+        "en": "Block source"
+      },
+      {
+        "fa": "SYN cookie/rate-limit فعال کنید",
+        "en": "Enable SYN cookies"
+      },
+      {
+        "fa": "با ISP تماس بگیرید",
+        "en": "Contact ISP"
+      }
+    ],
+    "commands": [
+      "show session info",
+      "netstat -an | find SYN_RECEIVED",
+      "show log | match attack"
+    ]
+  },
+  {
+    "id": "SC-03",
+    "category": "SECURITY",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "حرکت جانبی بدافزار",
+      "en": "Malware lateral movement"
+    },
+    "symptoms": [
+      {
+        "fa": "لاگ ورود غیرعادی",
+        "en": "Unusual login logs"
+      },
+      {
+        "fa": "ترافیک شرقی-غربی بالا",
+        "en": "High east-west traffic"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "اعتبارنامه لو رفته",
+        "en": "Compromised credentials"
+      },
+      {
+        "fa": "پورتها باز",
+        "en": "Open ports"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "حسابها قفل/غیرفعال شوند",
+        "en": "Disable accounts"
+      },
+      {
+        "fa": "میزبان آلوده ایزوله شود",
+        "en": "Isolate host"
+      },
+      {
+        "fa": "لاگها بررسی شود",
+        "en": "Review logs"
+      }
+    ],
+    "commands": [
+      "Get-EventLog -LogName Security",
+      "show log | match failure"
+    ]
+  },
+  {
+    "id": "MN-01",
+    "category": "MONITOR",
+    "severity": "HIGH",
+    "title": {
+      "fa": "CPU بالای روتر/سوئیچ",
+      "en": "High CPU on network device"
+    },
+    "symptoms": [
+      {
+        "fa": "CPU بالای ۸۰٪",
+        "en": "CPU over 80%"
+      },
+      {
+        "fa": "pingهایdropped",
+        "en": "Dropped pings"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "طوفان broadcast",
+        "en": "Broadcast storm"
+      },
+      {
+        "fa": "Process معیوب",
+        "en": "Buggy process"
+      },
+      {
+        "fa": "حمله",
+        "en": "Attack"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "process پرمصرف بیابید",
+        "en": "Find top process"
+      },
+      {
+        "fa": "ترافیک broadcast بررسی شود",
+        "en": "Check broadcast traffic"
+      },
+      {
+        "fa": "CoPP تنظیم کنید",
+        "en": "Configure CoPP"
+      }
+    ],
+    "commands": [
+      "show processes cpu sorted",
+      "show interfaces counters",
+      "show logging"
+    ]
+  },
+  {
+    "id": "MN-02",
+    "category": "MONITOR",
+    "severity": "CRITICAL",
+    "title": {
+      "fa": "دستگاه بهطور مکرر reboot میشود",
+      "en": "Device keeps reloading"
+    },
+    "symptoms": [
+      {
+        "fa": "Uptime کوتاه",
+        "en": "Short uptime"
+      },
+      {
+        "fa": "-crashinfo",
+        "en": "Crash info"
+      }
+    ],
+    "causes": [
+      {
+        "fa": " overheating",
+        "en": "Overheating"
+      },
+      {
+        "fa": "منبع تغذیه",
+        "en": "PSU issue"
+      },
+      {
+        "fa": "باگ نرمافزار",
+        "en": "Software bug"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "دمای دستگاه چک شود",
+        "en": "Check temperature"
+      },
+      {
+        "fa": "لاگ crash بررسی شود",
+        "en": "Review crash log"
+      },
+      {
+        "fa": "نسخه نرمافزار بروزرسانی شود",
+        "en": "Upgrade IOS"
+      }
+    ],
+    "commands": [
+      "show version",
+      "show system",
+      "show logging | include %LINK"
+    ]
+  },
+  {
+    "id": "MN-03",
+    "category": "MONITOR",
+    "severity": "LOW",
+    "title": {
+      "fa": "انحراف ساعت / NTP",
+      "en": "Time drift / NTP issue"
+    },
+    "symptoms": [
+      {
+        "fa": "لاگها با زمان اشتباه",
+        "en": "Logs with wrong timestamps"
+      },
+      {
+        "fa": "Kerberos fail",
+        "en": "Kerberos failures"
+      }
+    ],
+    "causes": [
+      {
+        "fa": "سرور NTP در دسترس نیست",
+        "en": "NTP server unreachable"
+      },
+      {
+        "fa": "باتری CMOS",
+        "en": "CMOS battery"
+      }
+    ],
+    "steps": [
+      {
+        "fa": "NTP را تنظیم کنید",
+        "en": "Configure NTP"
+      },
+      {
+        "fa": "چند سرور NTP اضافه کنید",
+        "en": "Add multiple NTP servers"
+      }
+    ],
+    "commands": [
+      "show ntp status",
+      "w32tm /query /status",
+      "date"
+    ]
+  }
+]
