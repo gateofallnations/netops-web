@@ -8,7 +8,7 @@ const $toast = document.getElementById('toast');
 
 const state = {
   user: null,
-  lang: localStorage.getItem('netops.lang') || 'fa',
+  lang: localStorage.getItem('netops.lang') || 'en',
   palette: localStorage.getItem('netops.palette') || 'cyan',
   glass: parseFloat(localStorage.getItem('netops.glass') || '0.29'),
   screen: 'dashboard',
