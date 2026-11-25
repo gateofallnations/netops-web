@@ -26,7 +26,9 @@ const state = {
   userModal: false,
   userTab: 0,
   diagnostics: [],
-  problemId: null
+  problemId: null,
+  token: sessionStorage.getItem('netops.token') || '',
+  editTarget: null
 };
 
 let audioCtx = null;
@@ -119,10 +121,37 @@ async function saveCache() {
   } catch (e) { toast(t('حافظهی محلی پر است', 'Local storage full')); }
 }
 async function api(path, options) {
-  const res = await fetch(API + path, options);
+  const opts = options || {};
+  if (state.token) {
+    opts.headers = { ...(opts.headers || {}), Authorization: 'Bearer ' + state.token };
+  }
+  const res = await fetch(API + path, opts);
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HTTP ${res.status}`);
   return res.json();
 }
+const EDIT_FIELDS = {
+  phone: ['name', 'phone', 'extension', 'mobile', 'position', 'notes', 'address'],
+  ips: ['site', 'ip', 'computerName', 'location', 'unit', 'userName', 'operator', 'domain', 'os', 'type', 'cpu', 'ram', 'dhcp', 'wifi', 'padvish', 'bit', 'inHost'],
+  vcenters: ['name', 'ip', 'vcenter', 'server', 'service', 'rdpPort', 'status', 'date', 'cpu', 'storage'],
+  rahkaran: ['companyName', 'ip', 'rdpPort', 'webPort', 'webUrl', 'webUrlAlt', 'notes'],
+  servers: ['name', 'ip', 'site', 'service', 'rdpPort', 'status', 'esxiHost', 'vcenter', 'notes']
+};
+
+async function writeCollection(name, op, item, id) {
+  try {
+    const res = await api('/write', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ collection: name, op, item, id })
+    });
+    toast(res.ok ? t('ذخیره شد و با تیم همگام شد', 'Saved and synced with the team') : (res.error || 'Error'));
+    beep(res.ok ? 'success' : 'error');
+    if (res.ok) { state.editTarget = null; render(); loadData(); }
+  } catch (ex) { toast(ex.message); }
+}
+
+function canEditRole() { return ['CREATOR', 'ADMIN', 'EDITOR'].includes(state.user?.role); }
+function canAdminRole() { return ['CREATOR', 'ADMIN'].includes(state.user?.role); }
+
 async function loadData() {
   toast(t('دریافت دادهها…', 'Loading data…'));
   try {
@@ -197,7 +226,7 @@ function appView() {
     phonebook: phoneView, academy: academyView, helpdesk: helpdeskView,
     favorites: favoritesView, search: searchView, settings: settingsView, tools: toolsView, users: usersView
   }[screen] || dashboardView)();
-  $app.innerHTML = `<div class="app">${head}${content}${footer()}</div>${state.article ? articleModal() : ''}${state.ticket ? ticketModal() : ''}${usersModal()}${problemModal()}`;
+  $app.innerHTML = `<div class="app">${head}${content}${footer()}</div>${state.article ? articleModal() : ''}${state.ticket ? ticketModal() : ''}${usersModal()}${problemModal()}${editModal()}`;
 }
 
 function apkHeader(screen) {
@@ -307,13 +336,16 @@ function serversView() {
   const q = state.q.servers || '';
   const items = (state.data.servers || []).filter(x => matches(x, q));
   return `${searchInput('servers', t('جستجو: نام، IP، سایت، سرویس…', 'Search name, IP, site, service…'))}
-    <div class="muted">${num(items.length)} ${t('سرور', 'servers')}</div>
+    <div class="row"><div class="muted" style="flex:1">${num(items.length)} ${t('سرور', 'servers')}</div>
+      ${canEditRole() ? `<button class="btn" data-act="openedit" data-key="servers">+ ${t('جدید', 'New server')}</button>` : ''}</div>
     ${items.length ? items.slice(0, 300).map((x, i) => `
       <div class="list-item" style="--i:${i}" data-act="copy" data-id="${esc(x.ip)}">
         <div class="avatar">▣</div><div class="col" style="flex:1">
           <span class="item-title">${esc(x.name)}</span>
           <span class="item-sub mono">${esc(x.ip)} • ${esc(x.service || '')}</span>
         </div><span class="tag">${esc(x.site || '')}</span>
+        ${canEditRole() ? `<button class="chip" data-act="openedit" data-key="servers" data-id="${esc(x.id)}">${t('ویرایش', 'Edit')}</button>` : ''}
+        ${canAdminRole() ? `<button class="chip" data-act="delitem" data-key="servers" data-id="${esc(x.id)}">${t('حذف', 'Delete')}</button>` : ''}
       </div>`).join('') : empty(t('سروری یافت نشد', 'No servers found'))}`;
 }
 function inventoryView() {
@@ -325,26 +357,32 @@ function inventoryView() {
   return `
     <div class="chips">${tabs.map(([i, label]) => `<button class="chip ${tab === i ? 'active' : ''}" data-act="tab" data-key="inventory" data-id="${i}">${label}</button>`).join('')}</div>
     ${searchInput('inventory', t('جستجو در موجودی…', 'Search inventory…'))}
-    <div class="muted">${num(items.length)} ${t('رکورد', 'records')}</div>
+    <div class="row"><div class="muted" style="flex:1">${num(items.length)} ${t('رکورد', 'records')}</div>
+      ${canAdminRole() ? `<button class="btn" data-act="openedit" data-key="${key}">+ ${t('افزودن', 'Add')}</button>` : ''}</div>
     ${items.length ? items.slice(0, 300).map((x, i) => `
       <div class="list-item" style="--i:${i}" data-act="copy" data-id="${esc(x.ip || '')}">
         <div class="avatar">▦</div><div class="col" style="flex:1">
           <span class="item-title mono">${esc(x.ip || x.name || x.companyName || '')}</span>
           <span class="item-sub">${esc(x.site || x.vcenter || x.companyName || '')} • ${esc(x.computerName || x.service || x.rdpPort || '')}</span>
         </div><span class="tag">${esc(x.type || x.status || '')}</span>
+        ${canAdminRole() ? `<button class="chip" data-act="openedit" data-key="${key}" data-id="${esc(x.id)}">${t('ویرایش', 'Edit')}</button>
+        <button class="chip" data-act="delitem" data-key="${key}" data-id="${esc(x.id)}">${t('حذف', 'Delete')}</button>` : ''}
       </div>`).join('') : empty(t('رکوردی یافت نشد', 'No records found'))}`;
 }
 function phoneView() {
   const q = state.q.phone || '';
   const items = (state.data.phone || []).filter(x => matches(x, q));
   return `${searchInput('phone', t('جستجو: نام، شماره، پست…', 'Search name, number, position…'))}
-    <div class="muted">${num(items.length)} ${t('مخاطب', 'contacts')}</div>
+    <div class="row"><div class="muted" style="flex:1">${num(items.length)} ${t('مخاطب', 'contacts')}</div>
+      <button class="btn" data-act="openedit" data-key="phone">+ ${t('جدید', 'New contact')}</button></div>
     ${items.length ? items.map((x, i) => `
       <div class="list-item" style="--i:${i}" data-act="call" data-id="${esc(x.mobile || x.phone || '')}">
         <div class="avatar">☎</div><div class="col" style="flex:1">
           <span class="item-title">${esc(x.name)}</span>
           <span class="item-sub">${esc(x.position || '')} ${x.extension ? '• ' + esc(x.extension) : ''}</span>
         </div><span class="tag mono">${esc(x.mobile || x.phone || '')}</span>
+        <button class="chip" data-act="openedit" data-key="phone" data-id="${esc(x.id)}">${t('ویرایش', 'Edit')}</button>
+        <button class="chip" data-act="delitem" data-key="phone" data-id="${esc(x.id)}">${t('حذف', 'Delete')}</button>
       </div>`).join('') : empty(t('مخاطبی یافت نشد', 'No contacts found'))}`;
 }
 function academyView() {
@@ -615,6 +653,19 @@ function settingsView() {
     </div>`;
 }
 
+function editModal() {
+  const target = state.editTarget;
+  if (!target) return '';
+  const fields = EDIT_FIELDS[target.collection] || [];
+  return `<div class="modal-back" data-act="closeedit">
+    <div class="modal" data-stop="1">
+      <div class="modal-head"><button class="icon-btn" data-act="closeedit">✕</button>
+        <h2>${target.id ? t('ویرایش', 'Edit') : t('افزودن', 'Add')} — ${esc(target.collection)}</h2></div>
+      ${fields.map((f, i) => `<input class="field" data-input="edit_${f}" value="${esc(target.item[f] || '')}" placeholder="${esc(f)}">`).join('')}
+      <button class="btn solid" data-act="saveedit">${t('ذخیره', 'Save')}</button>
+    </div></div>`;
+}
+
 /* ---------------------------------------------------------------- modals */
 function articleModal() {
   const x = state.article;
@@ -724,7 +775,9 @@ document.addEventListener('submit', async e => {
     });
     if (!res.ok) { err.textContent = res.error || t('ورود ناموفق', 'Login failed'); return; }
     state.user = res.user;
+    state.token = res.token || '';
     sessionStorage.setItem('netops.user', JSON.stringify(res.user));
+    sessionStorage.setItem('netops.token', state.token);
     loadCached();
     render();
     loadData();
@@ -766,6 +819,29 @@ document.addEventListener('click', async e => {
     case 'closeproblem':
       if (e.target.closest('[data-stop]')) return;
       state.problemId = null; render(); break;
+    case 'saveedit': {
+      if (!state.editTarget) return;
+      const item = { ...state.editTarget.item };
+      (EDIT_FIELDS[state.editTarget.collection] || []).forEach(f => { item[f] = state.q['edit_' + f] || ''; });
+      writeCollection(state.editTarget.collection, item.id ? 'upsert' : 'create', item, item.id);
+      break;
+    }
+    case 'closeedit':
+      if (e.target.closest('[data-stop]')) return;
+      state.editTarget = null; render(); break;
+    case 'openedit': {
+      const collection = el.dataset.key;
+      const item = collection === 'phone' ? (state.data.phone || []).find(x => x.id === id)
+        : collection === 'servers' ? (state.data.servers || []).find(x => x.id === id)
+        : (state.data[collection] || []).find(x => x.id === id);
+      state.editTarget = { collection, id: id || null, item: { ...(item || {}) } };
+      (EDIT_FIELDS[collection] || []).forEach(f => { state.q['edit_' + f] = (item || {})[f] || ''; });
+      render(); break;
+    }
+    case 'delitem':
+      if (!confirm(t('آیا حذف شود؟', 'Delete this item?'))) return;
+      writeCollection(el.dataset.key, 'delete', {}, id);
+      break;
     case 'go':
       state.screen = id;
       state.article = null; state.ticket = null;
