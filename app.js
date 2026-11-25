@@ -746,11 +746,11 @@ function usersModal() {
 }
 
 /* ---------------------------------------------------------------- events */
-function render() {
+function render(preserveScroll: Boolean = false) {
   applyTheme();
   if (!state.user) { loginView(); return; }
   appView();
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  if (!preserveScroll) window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 async function copyText(text) {
