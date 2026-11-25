@@ -794,7 +794,8 @@ document.addEventListener('input', e => {
     return;
   }
   state.q[key] = e.target.value;
-  if (key === 'note') return;
+  // فیلدهای دیالوگ ویرایش نباید کل رابط را بازسازی کنند؛ بازسازی باعث از دست رفتن فوکوس میشود
+  if (key.startsWith('edit_') || key === 'note') return;
   const pos = e.target.selectionStart;
   render();
   const next = document.querySelector(`[data-input="${key}"]`);
