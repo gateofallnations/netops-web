@@ -143,7 +143,12 @@ textarea.field { min-height:90px; resize:vertical; }
 .kpi span { font-size:10px; color:var(--muted); }
 
 /* Feature cards (Android dashboard) */
-.feature-card { padding:16px; margin-bottom:14px; animation:rise .45s both; animation-delay:calc(var(--i,0) * 55ms); }
+.feature-card { padding:16px; margin-bottom:14px; position:relative; overflow:hidden; animation:rise .45s both; animation-delay:calc(var(--i,0) * 55ms); transition:transform .18s ease, box-shadow .18s ease; }
+.feature-card:active { transform:scale(.97); box-shadow:0 0 26px color-mix(in srgb, var(--primary) 35%, transparent); }
+.feature-card::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--primary) 32%, transparent), transparent); }
+.feature-card:active::after { animation:card-sweep .55s ease-out forwards; }
+@keyframes card-sweep { 0% { transform:translateX(-100%); opacity:1; } 100% { transform:translateX(100%); opacity:0; } }
+.chip-action { border:0; cursor:pointer; }
 .feature-head { display:flex; align-items:center; gap:12px; }
 .feature-icon {
   width:44px; height:44px; flex:none; border-radius:14px; display:grid; place-items:center;

@@ -327,8 +327,7 @@ function dashboardView() {
           <div class="feature-icon">${icon}</div>
           <div style="flex:1"><div class="feature-title">${title}</div><div class="feature-desc">${desc}</div></div>
         </div>
-        <div class="feature-chips">${chips.map(c => `<span class="tag">${esc(c)}</span>`).join('')}</div>
-        <div class="explore">${t('کاوش', 'Explore')} ←</div>
+        <div class="feature-chips">${chips.map(c => `<button class="tag chip-action" data-act="go" data-id="${id}">${esc(c)}</button>`).join('')}</div>
       </div>`).join('')}`;
 }
 
@@ -746,7 +745,7 @@ function usersModal() {
 }
 
 /* ---------------------------------------------------------------- events */
-function render(preserveScroll: Boolean = false) {
+function render(preserveScroll = false) {
   applyTheme();
   if (!state.user) { loginView(); return; }
   appView();
