@@ -224,7 +224,7 @@ function appView() {
   const content = ({
     dashboard: dashboardView, servers: serversView, inventory: inventoryView,
     phonebook: phoneView, academy: academyView, helpdesk: helpdeskView,
-    favorites: favoritesView, search: searchView, settings: settingsView, tools: toolsView, users: usersView
+    favorites: favoritesView, search: searchView, settings: settingsView, tools: toolsView, users: usersView, pdf: pdfView
   }[screen] || dashboardView)();
   $app.innerHTML = `<div class="app">${head}${content}${footer()}</div>${state.article ? articleModal() : ''}${state.ticket ? ticketModal() : ''}${usersModal()}${problemModal()}${editModal()}`;
 }
@@ -239,7 +239,8 @@ function apkHeader(screen) {
     favorites: t('یادداشت و دسترسی سریع', 'Saved notes and quick access'),
     search: t('سرورها • سایتها • مقالات • مخاطبین', 'Servers • sites • guides • contacts'),
     settings: t('شخصیسازی • صدا • امنیت', 'Customization • sound • security'),
-    tools: t('ماشینحسابهایnetwork', 'Network calculators')
+    tools: t('ماشینحسابهایnetwork', 'Network calculators'),
+    pdf: '102 pages • complete Network+ course'
   };
   return `<div class="apk-header">
     <button class="home-btn" data-act="go" data-id="dashboard" title="${t('داشبورد', 'Home')}">⌂</button>
@@ -257,7 +258,8 @@ function screenTitle(s) {
     helpdesk: t('هلپدسک', 'Helpdesk'), favorites: t('علاقهمندیها', 'Favorites'),
     search: t('جستجو', 'Search'), settings: t('تنظیمات', 'Settings'),
     tools: t('ابزارهای مهندسی', 'Engineering tools'),
-    users: t('مدیریت کاربران', 'Users')
+    users: t('مدیریت کاربران', 'Users'),
+    pdf: 'Network+ — Shahmohammadi'
   })[s] || t('داشبورد', 'Dashboard');
 }
 function navBar() {
@@ -391,6 +393,11 @@ function academyView() {
     (!state.category || x.category === state.category) &&
     (!onlyFav || state.favorites.has(x.title)) && matches(x, q));
   return `
+    <div class="glass card course-card" data-act="go" data-id="pdf">
+      <img src="./course_cover.jpg" alt="Network+ course cover">
+      <div><strong>Network+ — Mahdi Shahmohammadi</strong>
+        <div class="muted">${t('۱۰۲ صفحه • دورهی کامل •With کیفیت بالا', '102 pages • complete course • high quality')}</div></div>
+    </div>
     <div class="glass card">
       <h2>◈ ${t('آکادمی شبکه', 'Network Academy')}</h2>
       <div class="muted">${num(state.refs.length)} ${t('مطلب مرجع', 'reference guides')} • ${num(CATEGORIES.length - 1)} ${t('رشته', 'disciplines')}</div>
@@ -593,6 +600,18 @@ Range   : ${oct(net + 1)} – ${oct((net | (~maskNum >>> 0)) - 1)}</div>`;
       <h2>${t('پهنای باند', 'Bandwidth')}</h2>
       <div class="muted">${t('۱۰۰Mbps ≈ ۱۲.۵MB/s • ۱Gbps ≈ ۱۲۵MB/s', '100Mbps ≈ 12.5MB/s • 1Gbps ≈ 125MB/s')}</div>
     </div>`;
+}
+
+function pdfView() {
+  return `<div class="glass card">
+      <h2>📕 Network+ — Mahdi Shahmohammadi</h2>
+      <div class="muted">${t('همان PDF اصلWith تمام شکلها و دیاگرامها — قابل زوم توسط مرورگر', 'The original PDF with all diagrams — zoomable in your browser')}</div>
+      <div class="row" style="margin-top:10px">
+        <a class="btn" href="./network_plus_shahmohammadi.pdf" target="_blank" rel="noopener">${t('باز کردن PDF', 'Open PDF')}</a>
+        <a class="btn ghost" href="./network_plus_shahmohammadi.pdf" download>${t('دانلود', 'Download')}</a>
+      </div>
+    </div>
+    <embed class="pdf-embed" src="./network_plus_shahmohammadi.pdf" type="application/pdf">`;
 }
 
 function searchView() {
