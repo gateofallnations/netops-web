@@ -27,6 +27,7 @@ const state = {
   userTab: 0,
   diagnostics: [],
   problemId: null,
+  course: [],
   token: sessionStorage.getItem('netops.token') || '',
   editTarget: null
 };
@@ -64,7 +65,8 @@ const CATEGORIES = [
   ['fortigate', 'فورتینت', 'FortiGate'], ['hardware-support', 'سختافزار', 'Hardware'],
   ['printer-peripherals', 'پرینتر', 'Printers'], ['cmd-commands', 'دستورات CMD', 'CMD'],
   ['cpl-commands', 'دستورات CPL', 'CPL'], ['keywords', 'واژهنامه', 'Keywords'],
-  ['quick-reference', 'چیتشیتها', 'Quick Sheets']
+  ['quick-reference', 'چیتشیتها', 'Quick Sheets'],
+  ['cafe-network-plus', 'دوره Network+', 'Network+ Course']
 ];
 
 const NAV = [
@@ -162,6 +164,20 @@ async function loadData() {
     state.data = Object.fromEntries(entries);
     try { state.refs = await (await fetch('./reference_library.json')).json(); } catch (e) {}
     try { state.diagnostics = await (await fetch('./diagnostics.json')).json(); } catch (e) {}
+    try {
+      state.course = await (await fetch('./network_plus.json')).json();
+      const remote = state.data.cheats || [];
+      const courseItems = state.course.map(x => ({
+        id: 'course-' + x.id,
+        category: 'cafe-network-plus',
+        title: x.id + ' — ' + x.titleFa,
+        subtitle: x.titleEn,
+        command: x.video || x.lessonUrl,
+        description: 'Source: Cafe Amuzesh — Mahdi Shalahi\nGroup: ' + x.group + '\n' + x.lessonUrl,
+        tags: x.tags || 'network+'
+      }));
+      state.data.cheats = [...courseItems, ...remote];
+    } catch (e) {}
     try { state.release = await api('/release'); localStorage.setItem('netops.release', JSON.stringify(state.release)); } catch (e) {}
     await saveCache();
     render();
@@ -315,10 +331,10 @@ function dashboardView() {
     </div>
 
     <div class="kpis">
-      <div class="glass kpi"><strong class="primary">${num(servers.length)}</strong><span>${t('سرور', 'Servers')}</span></div>
-      <div class="glass kpi"><strong class="primary">${num(sites.length)}</strong><span>${t('سایت', 'Sites')}</span></div>
-      <div class="glass kpi"><strong class="primary">${num(companies.length)}</strong><span>${t('سامانه', 'Systems')}</span></div>
-      <div class="glass kpi"><strong class="primary">${num(cheats.length)}</strong><span>${t('مطلب', 'Guides')}</span></div>
+      <div class="glass kpi" data-act="go" data-id="servers"><strong class="primary">${num(servers.length)}</strong><span>${t('سرور', 'Servers')}</span></div>
+      <div class="glass kpi" data-act="go" data-id="inventory"><strong class="primary">${num(sites.length)}</strong><span>${t('سایت', 'Sites')}</span></div>
+      <div class="glass kpi" data-act="go" data-id="inventory"><strong class="primary">${num(companies.length)}</strong><span>${t('سامانه', 'Systems')}</span></div>
+      <div class="glass kpi" data-act="go" data-id="academy"><strong class="primary">${num(cheats.length)}</strong><span>${t('مطلب', 'Guides')}</span></div>
     </div>
 
     ${features.map(([id, icon, title, desc, chips], i) => `
@@ -682,7 +698,8 @@ function articleModal() {
       <div class="hr"></div>
       ${x.command ? `<div class="row"><span class="muted">${t('دستور / مرجع', 'Command / reference')}</span><span class="spacer"></span>
         <button class="chip" data-act="copy" data-id="${esc(x.command)}">⧉ ${t('کپی', 'Copy')}</button></div>
-        <div class="cmd" style="margin-top:6px">${esc(x.command)}</div>` : ''}
+        <div class="cmd" style="margin-top:6px">${esc(x.command)}</div>
+        ${/^https?:/.test(x.command) ? `<button class="btn solid" data-act="openlink" data-id="${esc(x.command)}">${t('باز کردن ویدیو / درس', 'Open video / lesson')}</button>` : ''}` : ''}
       ${x.description ? `<div class="hr"></div><div>${esc(x.description)}</div>` : ''}
       ${x.tags ? `<div class="hr"></div><div class="dim"># ${esc(x.tags)}</div>` : ''}
     </div></div>`;
@@ -872,6 +889,9 @@ document.addEventListener('click', async e => {
     }
     case 'closeticket':
       state.ticket = null; render(); break;
+    case 'openlink':
+      try { window.open(id, '_blank', 'noopener'); } catch (e) {}
+      break;
     case 'copy':
       copyText(id); break;
     case 'call':

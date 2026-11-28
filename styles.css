@@ -138,7 +138,10 @@ textarea.field { min-height:90px; resize:vertical; }
 .btn.danger { border-color:var(--error); color:var(--error); }
 
 .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
-.kpi { padding:12px 8px; text-align:center; }
+.kpi { padding:12px 8px; text-align:center; cursor:pointer; position:relative; overflow:hidden; transition:transform .18s ease, box-shadow .18s ease; }
+.kpi:active { transform:scale(.95); box-shadow:0 0 20px color-mix(in srgb, var(--primary) 35%, transparent); }
+.kpi::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transform:translateX(-100%); background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--primary) 30%,transparent),transparent); }
+.kpi:active::after { animation:card-sweep .5s ease-out forwards; }
 .kpi strong { display:block; font-size:20px; line-height:1.1; }
 .kpi span { font-size:10px; color:var(--muted); }
 
