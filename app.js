@@ -27,7 +27,6 @@ const state = {
   userTab: 0,
   diagnostics: [],
   problemId: null,
-  course: [],
   token: sessionStorage.getItem('netops.token') || '',
   editTarget: null
 };
@@ -65,8 +64,7 @@ const CATEGORIES = [
   ['fortigate', 'فورتینت', 'FortiGate'], ['hardware-support', 'سختافزار', 'Hardware'],
   ['printer-peripherals', 'پرینتر', 'Printers'], ['cmd-commands', 'دستورات CMD', 'CMD'],
   ['cpl-commands', 'دستورات CPL', 'CPL'], ['keywords', 'واژهنامه', 'Keywords'],
-  ['quick-reference', 'چیتشیتها', 'Quick Sheets'],
-  ['cafe-network-plus', 'دوره Network+', 'Network+ Course']
+  ['quick-reference', 'چیتشیتها', 'Quick Sheets']
 ];
 
 const NAV = [
@@ -164,20 +162,6 @@ async function loadData() {
     state.data = Object.fromEntries(entries);
     try { state.refs = await (await fetch('./reference_library.json')).json(); } catch (e) {}
     try { state.diagnostics = await (await fetch('./diagnostics.json')).json(); } catch (e) {}
-    try {
-      state.course = await (await fetch('./network_plus.json')).json();
-      const remote = state.data.cheats || [];
-      const courseItems = state.course.map(x => ({
-        id: 'course-' + x.id,
-        category: 'cafe-network-plus',
-        title: x.id + ' — ' + x.titleFa,
-        subtitle: x.titleEn,
-        command: x.video || x.lessonUrl,
-        description: 'Source: Cafe Amuzesh — Mahdi Shalahi\nGroup: ' + x.group + '\n' + x.lessonUrl,
-        tags: x.tags || 'network+'
-      }));
-      state.data.cheats = [...courseItems, ...remote];
-    } catch (e) {}
     try { state.release = await api('/release'); localStorage.setItem('netops.release', JSON.stringify(state.release)); } catch (e) {}
     await saveCache();
     render();
